@@ -1,7 +1,3 @@
-div {
-  width: 100%;
-}
-
 div#loginDescription {
   margin-top: 1rem;
 }
@@ -10,7 +6,7 @@ div#loginForm {
   margin-top: 4rem;
 }
 
-a#continueButton {
+button#continueButton {
   position: absolute;
   right: 0;
   margin-right: 15px;
