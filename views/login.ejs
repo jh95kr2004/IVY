@@ -10,16 +10,16 @@
     </div>
     <div class='row'>
       <div class='col'></div>
-      <div id='loginDescription' class='col-12 col-md-5'>Sign in to your pre-registered consulter account.</div>
+      <div id='loginDescription' class='col-12 col-md-5'><%- description %></div>
       <div class='col'></div>
     </div>
-    <form method="post">
+    <form method="post" action="/login">
       <div id='loginForm' class="form-group input-div">
         <div class="row">
           <div class='col'></div>
           <div class="col-12 col-md-5">
             <label for="email">Email</label>
-            <input type="email" class="form-control" placeholder="Email" id="email" required>
+            <input name="email" type="email" class="form-control" placeholder="Email" id="email" required>
           </div>
           <div class='col'></div>
         </div>
@@ -27,14 +27,14 @@
           <div class='col'></div>
           <div class="col-12 col-md-5">
             <label for="password">Password</label>
-            <input type="password" class="form-control" placeholder="Password" id="password" required>
+            <input name="password" type="password" class="form-control" placeholder="Password" id="password" required>
           </div>
           <div class='col'></div>
         </div>
         <div class="row">
           <div class='col'></div>
           <div class='col-12 col-md-5'>
-            <button type="submit" id="continueButton" class="btn btn-primary btn-lg">CONTINUE</button>
+            <button type="submit" id="continueButton" class="btn btn-primary btn-lg rightAlign">CONTINUE</button>
           </div>
           <div class='col'></div>
         </div>

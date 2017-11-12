@@ -68,7 +68,7 @@ div.button-group {
   margin-top: 1rem;
 }
 
-div.button-group button {
+div.button-group .btn {
   padding: 1rem 2rem 1rem 2rem;
 }
 
@@ -155,6 +155,7 @@ div.button-group button {
 #mainContainer .input-div input:focus {
   color: #000;
   border-color: #000;
+  box-shadow: none;
 }
 
 .btn-group button {
@@ -184,6 +185,20 @@ div.button-group button {
 .btn-group button.active {
   color: #651FFF;
   background-color: transparent;
+}
+
+.rightAlign {
+  float: right;
+}
+
+div#loginDescription {
+  margin-top: 1rem;
+  height: 2em;
+  margin-bottom: 4rem;
+}
+
+div#loginForm {
+  /* margin-top: 4rem; */
 }
 
 @media screen and (max-width: 1199px) {

@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressSession = require('express-session');
 
 var index = require('./routes/index');
 var login = require('./routes/login');
@@ -25,6 +26,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(ejs_layout.express);
+app.use(expressSession({
+  secret: "I'll be a IVY",
+  resave: true,
+  saveUninitialized: true
+}));
 
 app.use('/', index);
 app.use('/login', login);
