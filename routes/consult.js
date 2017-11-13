@@ -10,9 +10,16 @@ router.get('/', function(req, res, next) {
   var studentListHtml = "";
   MongoClient.connect(url, function(err, db) {
     if(err) throw err;
-    db.collection("students").find().toArray(function(err, result) {
+    db.collection("accounts").findOne({ email: req.session.user.email }, function(err, res) {
+      if(err) throw err;
+      res.students.forEach(function(id) {
+        db.collection("students").findOne({ _id: id }, function(err, res) {
+          studentListHtml += "<tr><td>" + res.name + "</td><td>" + res.grade + "th grade</td><td>" + res.highschool + "</td><td>!</td></tr>"
+        });
+      });
     });
   });
+  console.log(studentListHtml);
   res.layout('layout', {title:"IVY: Consult", head:""}, {body:{block:"consult"}});
 });
 
@@ -25,7 +32,9 @@ router.post('/new', function(req, res, next) {
       if(err) throw err;
       db.collection("students").insertOne(student, function(err, res) {
         if(err) throw err;
-        db.collection("accounts").updateOne({ email: req.session.user.email }, {}, function(err, res) {
+        db.collection("accounts").updateOne({ email: req.session.user.email }, { $push: { students: res._id } }, function(err, res) {
+          if(err) throw err;
+          db.close();
         });
         db.close();
       })
