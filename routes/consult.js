@@ -16,6 +16,24 @@ router.get('/', function(req, res, next) {
   res.layout('layout', {title:"IVY: Consult", head:""}, {body:{block:"consult"}});
 });
 
+router.post('/new', function(req, res, next) {
+  checkLoginConsult(req, res);
+  if(req.body.name.length == 0 || req.body.grade < 10 || req.body.grade > 12) res.send("0");
+  else {
+    var student = { name: req.body.name, grade: req.body.grade, highschool: req.body.highschool }
+    MongoClient.connect(url, function(err, db) {
+      if(err) throw err;
+      db.collection("students").insertOne(student, function(err, res) {
+        if(err) throw err;
+        db.collection("accounts").updateOne({ email: req.session.user.email }, {}, function(err, res) {
+        });
+        db.close();
+      })
+    })
+    res.send("1");
+  }
+})
+
 router.get('/new', function(req, res, next) {
   checkLoginConsult(req, res);
   res.layout('layout', {title:"IVY: New Student", head:'<script src="/javascripts/new.js"></script>'}, {body:{block:"new"}});

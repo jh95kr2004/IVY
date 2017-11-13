@@ -64,6 +64,10 @@ div.resultContainer table tr.selected {
   background-color: #CECECE;
 }
 
+div.resultContainer table tr td.code {
+  display: none;
+}
+
 div.button-group {
   margin-top: 1rem;
 }
@@ -124,6 +128,7 @@ div.button-group .btn {
 }
 
 #mainContainer .input-div input {
+  padding-left: 0;
   padding-bottom: 0.7rem;
   font-size: 1.5rem;
   font-weight: 300;
@@ -191,7 +196,7 @@ div.button-group .btn {
   float: right;
 }
 
-div#loginDescription {
+div.description {
   margin-top: 1rem;
   height: 2em;
   margin-bottom: 4rem;

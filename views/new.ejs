@@ -20,13 +20,39 @@
     <div class="row justify-content-start">
       <div class='col'></div>
       <div class='col-12 col-md-10'>
-        <div class='h1'>New Student</div>
-        <div>Enter basic information about the student.</div>
-        <div>
+        <div id='newTitle' class='h1'>New Student - Basic Info</div>
+        <div id='newDescription' class='description'>Enter basic information about the student.</div>
+        <div id="basicInfoDiv" class="form-group input-div">
+          <div class="row">
+            <div class="col-6">
+              <label for="fullname">Full Name</label>
+              <input name="fullname" type="text" class="form-control" placeholder="John Doe" id="fullname" required>
+            </div>
+            <div class="col-6">
+              <label for="grade">Grade</label>
+              <input name="grade" type="number" class="form-control" min="10" max="12" placeholder="10-12" id="grade" required>
+            </div>
+          </div>
+          <div class='button-group'>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="nextButton">NEXT</button>
+            <a href="/consult" class="btn btn-transparent btn-lg rightAlign">CANCEL</a>
+          </div>
         </div>
-        <div class='button-group'>
-          <button type="button" class="btn btn-primary btn-lg rightAlign">NEXT</button>
-          <a href="/consult" class="btn btn-transparent btn-lg rightAlign">CANCEL</a>
+        <div id="highSchoolDiv" class="form-group d-none">
+          <input type="text" class="form-control search-input" placeholder="Search">
+          <div class='resultContainer'>
+            <table class='table table-hover'>
+              <tbody>
+                <tr><td>A Maceo Smith New Tech High School</td><td>Dallas Texas</td><td class='code'>1</td></tr>
+                <tr><td>Aberdeen High</td><td>Aderdeen, MD</td><td class='code'>2</td></tr>
+                <tr><td>Abington Heights High School</td><td>Clarks Summit, PA</td><td class='code'>3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class='button-group'>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="saveButton">SAVE</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backButton">BACK</button>
+          </div>
         </div>
       </div>
       <div class='col'></div>
