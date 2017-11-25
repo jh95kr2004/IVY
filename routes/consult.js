@@ -5,6 +5,8 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var url = "mongodb://localhost:27017/IVY";
 
+// merge
+
 var authenticate = function(req, res, next) {
   if(req.session.user) {
     if(req.session.user.permission != 'consultant')
