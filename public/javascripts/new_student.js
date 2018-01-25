@@ -1,4 +1,5 @@
 $(function() {
+  $("#highSchoolSearch").val("");
   $("#highSchoolSearch").on("input", function() {
     $("#saveButton").attr("disabled", "true");
     if($(this).val() == "") {
@@ -28,15 +29,19 @@ $(function() {
   });
 
   $(".form-control").keyup(function() {
-    if(!($("#fullname").is(":valid")) || !($("#grade").is(":valid"))) {
+    if(!($("#fullname").is(":valid")) || !($("#highschoolEntranceYear").is(":valid"))) {
       $("#nextButton").attr("disabled", "true");
     } else {
       $("#nextButton").removeAttr("disabled");
     }
-  })
+  });
+
+  $("#cancelButton").click(function() {
+    window.history.back();
+  });
 
   $("#nextButton").click(function() {
-    if(!($("#fullname").is(":valid")) || !($("#grade").is(":valid"))) {
+    if(!($("#fullname").is(":valid")) || !($("#highschoolEntranceYear").is(":valid"))) {
       $(this).attr("disabled", "true");
       return;
     }
@@ -54,20 +59,20 @@ $(function() {
   });
 
   $("#saveButton").click(function() {
-    if(!($("#fullname").is(":valid")) || !($("#grade").is(":valid")) || $("tr.selected").length == 0) {
+    if(!($("#fullname").is(":valid")) || !($("#highschoolEntranceYear").is(":valid")) || $("tr.selected").length == 0) {
       $(this).attr("disabled", "true");
       return;
     }
 
     $.post("/consult/new", {
       name: $("#fullname").val(),
-      grade: $("#grade").val(),
+      highschoolEntranceYear: parseInt($("#highschoolEntranceYear").val()),
       highschool: $("tr.selected td.code").text()
     }).done(function(data) {
       if(data == 1) {
         alert("Added new student successfully!");
-        window.location.replace("/consult");
-      } else alert("You entered wrong data. Please check and re-try");
+        window.location = "/consult";
+      } else alert("You entered wrong data. Please check and re-try.");
     });
   });
 });

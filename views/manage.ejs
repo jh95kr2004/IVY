@@ -1,0 +1,58 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-light">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/consult">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col'></div>
+      <div class='col-12 col-md-10'>
+        <div id='newTitle' class='h1'><%- studentName %></div>
+        <div id='newDescription' class='description'><%- description %></div>
+        <div id="basicInfoDiv" class="form-group input-div">
+          <div class="row">
+            <div class="col-6 col-md-3">
+              <a href="/consult/manage/<%- studentId %>/curricular">Curricular</a>
+            </div>
+            <div class="col-6 col-md-3">
+              <a href="/consult/manage/<%- studentId %>/candidate">Candidate Schools</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-3">
+              <a href="/consult/manage/<%- studentId %>/background">Background</a>
+            </div>
+            <div class="col-6 col-md-3">
+              <a href="/consult/manage/<%- studentId %>/activities">Activities</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6"><hr></div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-3">
+              <a href="/consult/manage/<%- studentId %>/outlook">Outlook</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='col'></div>
+    </div>
+  </div>
+</body>

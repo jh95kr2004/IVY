@@ -13,6 +13,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/account">ACCOUNT</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -20,34 +23,28 @@
     <div class="row justify-content-start">
       <div class='col'></div>
       <div class='col-12 col-md-10'>
-        <div id='newTitle' class='h1'>New Student - Basic Info</div>
-        <div id='newDescription' class='description'>Enter basic information about the student.</div>
-        <div id="basicInfoDiv" class="form-group input-div">
+        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'><%- ordinalString %> Candidate School</span></div>
+        <div id='descriptionDiv' class='description'>Select candidate school.</div>
+        <div id="candidateDiv" class="form-group input-div">
           <div class="row">
             <div class="col-6">
-              <label for="fullname">Full Name</label>
-              <input name="fullname" type="text" class="form-control" placeholder="John Doe" id="fullname" required>
+              <label for="schoolName">School Name</label>
+              <select class="custom-select form-control" id="schoolName">
+                <option selected>Choose...</option>
+                <%- schoolNames %>
+              </select>
             </div>
             <div class="col-6">
-              <label for="grade">Grade</label>
-              <input name="grade" type="number" class="form-control" min="10" max="12" placeholder="10-12" id="grade" required>
+              <label for="major">Major</label>
+              <select class="custom-select form-control" id="major">
+                <option selected>Choose...</option>
+                <%- majors %>
+              </select>
             </div>
-          </div>
-          <div class='button-group'>
-            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="nextButton">NEXT</button>
-            <a href="/consult" class="btn btn-transparent btn-lg rightAlign">CANCEL</a>
-          </div>
-        </div>
-        <div id="highSchoolDiv" class="form-group d-none">
-          <input type="text" class="form-control search-input" placeholder="Search" id="highSchoolSearch">
-          <div class='resultContainer'>
-            <table class='table table-hover'>
-              <tbody></tbody>
-            </table>
           </div>
           <div class='button-group'>
             <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="saveButton">SAVE</button>
-            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backButton">BACK</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
           </div>
         </div>
       </div>

@@ -1,0 +1,94 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-dark">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/consult">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col-12 col-md-12'>
+        <div id='titleDiv' class='h3 button-group'>
+          <span id="title"><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Outlook</span></span>
+          <button type="button" class="btn btn-primary btn-lg" id="doneButton">DONE</button>
+        </div>
+        <div id='overviewDiv'>
+          <div class='h1'>Overview</div>
+          <div class='row'>
+            <div class='col-7'>
+              <div id='creditChart'></div>
+            </div>
+            <div class='col-5'>
+              <div class='h4'><span id="grade"></span> <span id="semester"></span></div>
+              <div>
+                <ul id="activityList">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class='button-group' style='text-align: right'>
+            <a href="/consult/manage/<%- studentId %>/activities" class="btn btn-secondary btn-lg" id="manageActivitiesButton">MANAGE ACTIVITIES</a>
+          </div>
+        </div>
+        <!-- This feature will be added in the future.
+        <div id='suggestedActivitiesDiv'>
+          <div>
+            <span class='h1'>Suggested Activities</span>
+            <input type="text" class="form-control search-input" id="searchBar" placeholder="Search">
+          </div>
+          <div class='resultContainer'>
+            <table class='table table-hover' id='suggestedActivitiesTable'>
+              <thead>
+                <tr><td>Rank</td><td>Activity Name</td><td>Date</td><td>Main Traits</td><td>Avg. Grade</td></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>AI JAM</td><td>Mid August</td><td>Leadership - Creativity</td><td>11.2</td></tr>
+                <tr><td>2</td><td>Saratoga Data Science</td><td>Late September</td><td>Leadership - Creativity</td><td>11.6</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class='button-group' style='text-align: right'>
+            <button type="button" class="btn btn-secondary btn-lg" id="addButton">ADD</button>
+          </div>
+        </div>
+        -->
+        <div id='summaryDiv'>
+          <div class='h1'>Summary</div>
+          <div class='row' id='noSummary'>
+            This student doesn't have activity plans.
+          </div>
+          <div class='row' id='9th'>
+            <div class='col-6 d-none' id='SS'><span>9th (Spring - Summer)</span><ul></ul></div>
+            <div class='col-6 d-none' id='FW'><span>9th (Fall - Winter)</span><ul></ul></div>
+          </div>
+          <div class='row' id='10th'>
+            <div class='col-6 d-none' id='SS'><span>10th (Spring - Summer)</span><ul></ul></div>
+            <div class='col-6 d-none' id='FW'><span>10th (Fall - Winter)</span><ul></ul></div>
+          </div>
+          <div class='row' id='11th'>
+            <div class='col-6 d-none' id='SS'><span>11th (Spring - Summer)</span><ul></ul></div>
+            <div class='col-6 d-none' id='FW'><span>11th (Fall - Winter)</span><ul></ul></div>
+          </div>
+          <div class='row' id='12th'>
+            <div class='col-6 d-none' id='SS'><span>12th (Spring - Summer)</span><ul></ul></div>
+            <div class='col-6 d-none' id='FW'><span>12th (Fall - Winter)</span><ul></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

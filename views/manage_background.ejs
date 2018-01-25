@@ -1,0 +1,79 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-light">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/consult">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col'></div>
+      <div class='col-12 col-md-10'>
+        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Background</span></div>
+        <div id='descriptionDiv' class='description'>Enter information on this studentʼs background.</div>
+        <div id="backgroundDiv" class="form-group input-div">
+          <div class="row">
+            <div class="col-6">
+              <label for="familyType">Family Type</label>
+              <select class="custom-select form-control" id="familyType">
+                <option>Choose...</option>
+                <%- familyTypes %>
+              </select>
+            </div>
+            <div class="col-6">
+              <label for="siblingCount">Sibling Count</label>
+              <select class="custom-select form-control" id="siblingCount">
+                <option>Choose...</option>
+                <%- siblingCount %>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="parentsEducation">Parent's Education (Highest)</label>
+              <select class="custom-select form-control" id="parentsEducation">
+                <option>Choose...</option>
+                <%- parentsEducations %>
+              </select>
+            </div>
+            <!--<div class="col-6">
+              <label for="ethnicity">Ethnicity</label>
+              <select class="custom-select form-control" id="ethnicity">
+                <option selected>Choose...</option>
+                <%- ethnicities %>
+              </select>
+            </div>-->
+          </div>
+          <!--<div class="row">
+            <div class="col-6">
+              <label for="veteranRelatives">Veteran Relatives</label>
+              <select class="custom-select form-control" id="veteranRelatives">
+                <option selected>Choose...</option>
+                <%- veteranRelatives %>
+              </select>
+            </div>
+          </div>-->
+          <div class='button-group'>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="saveButton">SAVE</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
+          </div>
+        </div>
+      </div>
+      <div class='col'></div>
+    </div>
+  </div>
+</body>

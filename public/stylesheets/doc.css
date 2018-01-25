@@ -9,6 +9,10 @@ nav a {
 	color: #000;
 }
 
+button:not([disabled]) {
+	cursor: pointer;
+}
+
 .open-sans {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -41,4 +45,8 @@ nav a {
 
 .btn-transparent:hover {
 	color: #000000;
+}
+
+.hidden {
+  display: none;
 }

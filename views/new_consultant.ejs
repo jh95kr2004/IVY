@@ -1,0 +1,51 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-light">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin">CONSULTANTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/highschool">HIGH SCHOOLS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col'></div>
+      <div class='col-12 col-md-10'>
+        <div id='newTitle' class='h1'>New Consultant - Basic Info</div>
+        <div id='newDescription' class='description'>Enter basic information about the consultant.</div>
+        <div id="basicInfoDiv" class="form-group input-div">
+          <div class="row">
+            <div class="col-6">
+              <label for="fullname">Full Name</label>
+              <input name="fullname" type="text" class="form-control" placeholder="John Doe" id="fullname" required>
+            </div>
+            <div class="col-6">
+              <label for="email">E-mail</label>
+              <input name="email" type="email" class="form-control" placeholder="consultant@ivy.com" id="email" required>
+            </div>
+          </div>
+          <div class='button-group'>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="saveButton">SAVE</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
+          </div>
+        </div>
+      </div>
+      <div class='col'></div>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,128 @@
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+nav li.active a.nav-link {
+  color: #FFFFFF;
+}
+
+nav a.nav-link {
+  color: #ADADAD;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+nav a.nav-link:hover {
+  color: #FFFFFF;
+}
+
+div#titleDiv {
+  position: relative;
+  width: 100%;
+  padding-bottom: 5rem;
+}
+
+button#doneButton {
+  position: absolute;
+  right: 0;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+div#overviewDiv {
+  padding-bottom: 5rem;
+}
+
+input#searchBar {
+  background-color: #000;
+  color: #FFF;
+}
+
+input#searchBar:focus {
+  border-color: #FFF;
+}
+
+div.resultContainer {
+  border: 1px solid #FFFFFF;
+}
+
+table#suggestedActivitiesTable thead tr td {
+  border-bottom: 1px solid #FFFFFF;
+}
+
+table#suggestedActivitiesTable tbody tr:hover {
+  background-color: #333333;
+}
+
+table#suggestedActivitiesTable tbody tr.selected {
+  background-color: #555555;
+}
+
+button#addButton {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+div#suggestedActivitiesDiv {
+  padding-bottom: 5rem;
+}
+
+.bb-tooltip-container {
+  color: #000;
+}
+
+.bb-shape.bb-line {
+  stroke-width: 4px;
+}
+
+.bb .bb-axis path, .bb-axis .tick line {
+  stroke: #fff;
+}
+
+.bb-axis text, .bb-legend-item text {
+  fill:#fff;
+}
+
+.bb-selected-circle {
+  fill: #007bff;
+  stroke: #007bff;
+}
+
+.bb-grid line {
+
+}
+
+circle {
+  opacity: 1 !important;
+}
+
+circle._selected_ {
+  fill: transparent !important;
+  stroke: #007bff !important;
+}
+
+ul#activityList, div#summaryDiv ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  font-weight: 200;
+  color: #CCC;
+}
+
+ul#activityList li, div#summaryDiv ul li {
+  padding-top: .5rem;
+}
+
+div#summaryDiv div.row {
+  font-weight: 200;
+  padding-bottom: 1rem;
+}
+
+div#summaryDiv div.col-6 {
+  padding-left: 0;
+}
+
+div#summaryDiv div.row span {
+  font-size: 1.5rem;
+}

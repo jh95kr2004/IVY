@@ -1,0 +1,44 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-light">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/consult">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col'></div>
+      <div class='col-12 col-md-10'>
+        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Candidate Schools</span></div>
+        <div id='descriptionDiv' class='description'></div>
+        <div id="candidateSchoolsDiv" class="form-group input-div">
+          <table class='table table-hover'>
+            <tbody>
+              <tr id='firstCandidate'><%- firstCandidate %></tr>
+              <tr id='secondCandidate'><%- secondCandidate %></tr>
+              <tr id='thirdCandidate'><%- thirdCandidate %></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class='button-group'>
+          <a href="/consult/manage/<%- studentId %>" class="btn btn-primary btn-lg rightAlign" id="doneButton">DONE</a>
+        </div>
+      </div>
+      <div class='col'></div>
+    </div>
+  </div>
+</body>
