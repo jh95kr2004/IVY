@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var express = require('express');
 var ejs_layout = require('ejs-layouts');
 var path = require('path');
@@ -15,6 +17,9 @@ var logout = require('./routes/logout');
 var account = require('./routes/account');
 
 var app = express();
+var http = require('http').Server(app);
+
+http.listen(3000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
