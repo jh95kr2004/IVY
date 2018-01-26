@@ -18,7 +18,9 @@ $(function() {
       $("div#navbarSupportedContent > ul").removeClass("navbar-nav");
       $("div#navbarSupportedContent > ul").addClass("nav");
     }
-  })
+  });
+
+  $('[data-toggle="tooltip"]').tooltip();
 
   $("#curricularButton").click(function() {
     $("#extra-curricularInput").css("display", "none");
