@@ -43,7 +43,7 @@ button:not([disabled]) {
 	color: #CECECE;
 }
 
-.btn-transparent:hover {
+.btn-transparent:not([disabled]):hover {
 	color: #000000;
 }
 

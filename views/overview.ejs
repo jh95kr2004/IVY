@@ -1,0 +1,96 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-light">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/consult">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col'></div>
+      <div class='col-12 col-md-10'>
+        <div id='titleDiv' class='h1 button-group'>
+          <span id="title"><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Overview</span></span>
+          <button type="button" class="btn btn-primary btn-lg" id="doneButton">DONE</button>
+        </div>
+        <div id="overviewDiv">
+          <div id="academicInfoDiv">
+            <p class='h3'>Academic Information<a href='/consult/manage/<%- studentId %>/academic'>EDIT</a></p>
+            <table>
+              <tbody>
+                <tr><th>SAT Verbal</th><td><%- SATVerbal %></td></tr>
+                <tr><th>SAT Writing</th><td><%- SATWriting %></td></tr>
+                <tr><th>SAT Math</th><td><%- SATMath %></td></tr>
+                <tr><th>GPA</th><td><%- GPA %></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="candidateSchoolsDiv">
+            <p class='h3'>Candidate Schools<a href='/consult/manage/<%- studentId %>/candidate'>EDIT</a></p>
+            <table>
+              <tbody>
+                <tr><th>First Candidate</th><%- firstCandidate %></tr>
+                <tr><th>Second Candidate</th><%- secondCandidate %></tr>
+                <tr><th>Third Candidate</th><%- thirdCandidate %></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="backgroundDiv">
+            <p class='h3'>Background<a href='/consult/manage/<%- studentId %>/background'>EDIT</a></p>
+            <table>
+              <tbody>
+                <tr><th>Family Types</th><td><%- familyTypes %></td></tr>
+                <tr><th>Sibling Count</th><td><%- siblingCount %></td></tr>
+                <tr><th>Parents Education</th><td><%- parentsEducations %></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="activitiesDiv">
+            <p class='h3'>Activities<a href='/consult/manage/<%- studentId %>/activities'>EDIT</a></p>
+            <table>
+              <tbody>
+                <%- activities %>
+              </tbody>
+            </table>
+          </div>
+          <div id="basicAbilityInfoDiv">
+            <p class='h3'>Basic Ability Information<a href='/consult/manage/<%- studentId %>/basic'>EDIT</a></p>
+            <table>
+              <tbody>
+                <tr><th>Leadership</th><td><%- leadership %></td></tr>
+                <tr><th>Communication</th><td><%- communication %></td></tr>
+                <tr><th>Creativity</th><td><%- creativity %></td></tr>
+                <tr><th>Intelligence</th><td><%- intelligence %></td></tr>
+                <tr><th>Motivation</th><td><%- motivation %></td></tr>
+                <tr><th>Character</th><td><%- character %></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="interestsDiv">
+            <p class='h3'>Interests<a href='/consult/manage/<%- studentId %>/interests'>EDIT</a></p>
+            <table>
+              <tbody>
+                <%- interests %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class='col'></div>
+    </div>
+  </div>
+</body>

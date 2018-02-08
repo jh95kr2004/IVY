@@ -83,8 +83,8 @@ var findStudent = function(req, res, next) {
 router.get('/manage/:studentId/', authenticate, findStudent, function(req, res, next) {
   res.layout('layout',
   {
-    title: "IVY: Portfolio",
-    head: "<script src='/javascripts/consult.js'></script>"
+    title: "IVY: Manage",
+    head: "<script src='/javascripts/consult.js'></script><script src='/javascripts/manage.js'></script><link rel='stylesheet' href='/stylesheets/manage.css'>"
   },
   {
     body: {
@@ -92,41 +92,82 @@ router.get('/manage/:studentId/', authenticate, findStudent, function(req, res, 
       data: {
         studentName: req.student.name,
         studentId : req.student._id,
+        memo: req.student.memo,
         description: ""
       }
     }
   });
 });
 
-router.get('/manage/:studentId/curricular', authenticate, findStudent, function(req, res, next) {
+router.post('/manage/:studentId/', authenticate, findStudent, function(req, res, next) {
+  req.student.memo = req.body.memo;
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+      if(err) throw err;
+      db.close();
+    });
+  });
+});
+
+router.get('/manage/:studentId/academic', authenticate, findStudent, function(req, res, next) {
   res.layout('layout',
   {
-    title: "IVY: Portfolio",
-    head: "<script src='/javascripts/manage_curricular.js'></script>"
+    title: "IVY: Academic Info",
+    head: "<script src='/javascripts/manage_academic.js'></script>"
   },
   {
     body: {
-      block: "manage_curricular",
+      block: "manage_academic",
       data: {
         studentName: req.student.name,
         studentId: req.student._id,
-        SATVerbal: ('SATVerbal' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.SATVerbal) : "",
-        SATWriting: ('SATWriting' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.SATWriting) : "",
-        SATMath: ('SATMath' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.SATMath) : "",
-        GPA: ('GPA' in req.student.portfolio.curricular) ? parseFloat(req.student.portfolio.curricular.GPA) : "",
-        leadership: ('leadership' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.leadership) : "",
-        communication: ('communication' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.communication) : "",
-        creativity: ('creativity' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.creativity) : "",
-        intelligence: ('intelligence' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.intelligence) : "",
-        motivation: ('motivation' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.motivation) : "",
-        character: ('character' in req.student.portfolio.curricular) ? parseInt(req.student.portfolio.curricular.character) : ""
+        SATVerbal: ('SATVerbal' in req.student.portfolio.academic) ? parseInt(req.student.portfolio.academic.SATVerbal) : "",
+        SATWriting: ('SATWriting' in req.student.portfolio.academic) ? parseInt(req.student.portfolio.academic.SATWriting) : "",
+        SATMath: ('SATMath' in req.student.portfolio.academic) ? parseInt(req.student.portfolio.academic.SATMath) : "",
+        GPA: ('GPA' in req.student.portfolio.academic) ? parseFloat(req.student.portfolio.academic.GPA) : ""
       }
     }
   });
 });
 
-router.post('/manage/:studentId/curricular', authenticate, findStudent, function(req, res, next) {
-  req.student.portfolio.curricular = req.body;
+router.post('/manage/:studentId/academic', authenticate, findStudent, function(req, res, next) {
+  req.student.portfolio.academic = req.body;
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+      if(err) throw err;
+      db.close();
+      res.send("1");
+    });
+  });
+});
+
+router.get('/manage/:studentId/basic', authenticate, findStudent, function(req, res, next) {
+  res.layout('layout',
+  {
+    title: "IVY: Basic Ability",
+    head: "<script src='/javascripts/manage_basicability.js'></script>"
+  },
+  {
+    body: {
+      block: "manage_basicability",
+      data: {
+        studentName: req.student.name,
+        studentId: req.student._id,
+        leadership: ('leadership' in req.student.portfolio.basic) ? parseInt(req.student.portfolio.basic.leadership) : "",
+        communication: ('communication' in req.student.portfolio.basic) ? parseInt(req.student.portfolio.basic.communication) : "",
+        creativity: ('creativity' in req.student.portfolio.basic) ? parseInt(req.student.portfolio.basic.creativity) : "",
+        intelligence: ('intelligence' in req.student.portfolio.basic) ? parseInt(req.student.portfolio.basic.intelligence) : "",
+        motivation: ('motivation' in req.student.portfolio.basic) ? parseInt(req.student.portfolio.basic.motivation) : "",
+        character: ('character' in req.student.portfolio.basic) ? parseInt(req.student.portfolio.basic.character) : ""
+      }
+    }
+  });
+});
+
+router.post('/manage/:studentId/basic', authenticate, findStudent, function(req, res, next) {
+  req.student.portfolio.basic = req.body;
   MongoClient.connect(url, function(err, db) {
     if(err) throw err;
     db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
@@ -158,7 +199,7 @@ router.get('/manage/:studentId/candidate', authenticate, findStudent, function(r
         res.layout('layout',
         {
           title: "IVY: Candidate Schools",
-          head: ""
+          head: "<link rel='stylesheet' href='/stylesheets/manage_candidateschools.css'>"
         },
         {
           body: {
@@ -288,30 +329,30 @@ router.post('/manage/:studentId/background', authenticate, findStudent, function
 
 router.get('/manage/:studentId/activities', authenticate, findStudent, function(req, res, next) {
   var activitiesListHtml = "";
-  var activities = [];
+  var studentActivities = [];
   var types = {};
+  var activities = {};
+  var semesters = ["", "Spring/Summer", "Fall/Winter"];
   for(var activity of req.student.portfolio.activities)
-    activities.push(activity.activityId);
+    studentActivities.push(activity.activityId);
   MongoClient.connect(url, function(err, db) {
     if(err) throw err;
     db.collection("activities").aggregate([
       {
-        $match: { _id: { $in: activities } }
-      },
-      {
-        $sort: { name: 1 }
+        $match: { _id: { $in: studentActivities } }
       }
-    ]).toArray(function(err, activities) {
+    ]).toArray(function(err, result) {
       if(err) throw err;
+      for(let activity of result) activities[activity._id] = activity;
       db.collection("activity_types").find({}).toArray(function(err, result) {
         if(err) throw err;
         db.close();
         for(let type of result) types[type._id] = type;
-        for(let activity of activities)
-          activitiesListHtml += "<tr><td>" + activity.name + "</td><td>" + types[activity.typeId].type + "</td><td>" + activity.year + "</td><td class='code'>" + activity._id + "</td></tr>";
+        for(var i in studentActivities)
+          activitiesListHtml += "<tr><td>" + activities[studentActivities[i]].name + "</td><td>" + types[activities[studentActivities[i]].typeId].type + "</td><td>" + activities[studentActivities[i]].year + "</td><td>" + semesters[activities[studentActivities[i]].semester] + "</td><td class='code'>" + i + "</td></tr>";
         res.layout('layout',
         {
-          title: "IVY: Portfolio",
+          title: "IVY: Activities",
           head: "<script src='/javascripts/manage_activities.js'></script>"
         },
         {
@@ -467,11 +508,19 @@ router.get('/manage/:studentId/activities/add/:activityId', authenticate, findSt
         body: {
           block: "add_activity",
           data: {
+            title: "Add Activity",
             studentName: req.student.name,
             studentId: req.student._id,
             activityName: req.activity.name,
             activityYear: req.activity.year,
             activityId: req.activity._id,
+            hoursPerWeek: "",
+            hoursPerYear: "",
+            leadership: "",
+            communication: "",
+            creativity: "",
+            intelligence: "",
+            selfMotivation: "",
             activityPositions: activityPositionsHtml
           }
         }
@@ -487,50 +536,241 @@ router.post('/manage/:studentId/activities/add/:activityId', authenticate, findS
       return;
     }
   }
-  if(req.body.hoursPerWeek < 1 || req.body.hoursPerWeek > 60
-    || req.body.hoursPerYear < 1 || req.body.hoursPerYear > 1023
-    || req.body.leadership < 0 || req.body.leadership > 10
-    || req.body.communication < 0 || req.body.communication > 10
-    || req.body.creativity < 0 || req.body.creativity > 10
-    || req.body.intelligence < 0 || req.body.intelligence > 10
-    || req.body.selfMotivation < 0 || req.body.selfMotivation > 10) {
-      res.json({ status: 0 });
-    }
-  else {
-    var activity = {
-      activityId: req.activity._id,
-      positionId: req.body.positionId,
-      hoursPerWeek: parseInt(req.body.hoursPerWeek),
-      hoursPerYear: parseInt(req.body.hoursPerYear),
-      leadership: parseInt(req.body.leadership),
-      communication: parseInt(req.body.communication),
-      creativity: parseInt(req.body.creativity),
-      intelligence: parseInt(req.body.intelligence),
-      selfMotivation: parseInt(req.body.selfMotivation)
-    };
-    MongoClient.connect(url, function(err, db) {
+  var activity = {
+    activityId: req.activity._id,
+    positionId: req.body.positionId,
+    hoursPerWeek: parseInt(req.body.hoursPerWeek),
+    hoursPerYear: parseInt(req.body.hoursPerYear),
+    leadership: parseInt(req.body.leadership),
+    communication: parseInt(req.body.communication),
+    creativity: parseInt(req.body.creativity),
+    intelligence: parseInt(req.body.intelligence),
+    selfMotivation: parseInt(req.body.selfMotivation)
+  };
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").updateOne({_id: new ObjectID(req.student._id)}, {$push: { "portfolio.activities": activity}}, function(err, result) {
       if(err) throw err;
-      db.collection("students").updateOne({_id: new ObjectID(req.student._id)}, {$push: { "portfolio.activities": activity}}, function(err, result) {
+      db.collection("activities").updateOne({_id: new ObjectID(req.activity._id)}, {$push: { students: new ObjectID(req.student._id)}}, function(err, result) {
         if(err) throw err;
-        db.collection("activities").updateOne({_id: new ObjectID(req.activity._id)}, {$push: { students: new ObjectID(req.student._id)}}, function(err, result) {
-          if(err) throw err;
-          db.close();
-          res.json({ status: 1, url: "/consult/manage/" + req.student._id + "/activities" });
+        db.close();
+        res.json({ status: 1, url: "/consult/manage/" + req.student._id + "/activities" });
+      });
+    });
+  });
+});
+
+router.get('/manage/:studentId/activities/edit/:activityIndex', authenticate, findStudent, function(req, res, next) {
+  var activityPositionsHtml = "";
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("activities").findOne({ _id: new ObjectID(req.student.portfolio.activities[req.params.activityIndex].activityId) }, function(err, result) {
+      if(err) throw err;
+      req.activity = result;
+      db.collection("activity_positions").find({}).sort({position: 1}).toArray(function(err, result) {
+        if(err) throw err;
+        db.close();
+        for(let position of result)
+          activityPositionsHtml += '<option value="' + position._id + '" ' + ((position._id.equals(req.student.portfolio.activities[req.params.activityIndex].positionId)) ? "selected" : "") + '>' + position.position + '</option>';
+        res.layout('layout',
+        {
+          title: "IVY: Edit Activity",
+          head: '<script src="/javascripts/edit_activity.js"></script>'
+        },
+        {
+          body: {
+            block: "add_activity",
+            data: {
+              title: "Edit Activity",
+              studentName: req.student.name,
+              studentId: req.student._id,
+              activityName: req.activity.name,
+              activityYear: req.activity.year,
+              activityId: req.activity._id,
+              hoursPerWeek: req.student.portfolio.activities[req.params.activityIndex].hoursPerWeek,
+              hoursPerYear: req.student.portfolio.activities[req.params.activityIndex].hoursPerYear,
+              leadership: req.student.portfolio.activities[req.params.activityIndex].leadership,
+              communication: req.student.portfolio.activities[req.params.activityIndex].communication,
+              creativity: req.student.portfolio.activities[req.params.activityIndex].creativity,
+              intelligence: req.student.portfolio.activities[req.params.activityIndex].intelligence,
+              selfMotivation: req.student.portfolio.activities[req.params.activityIndex].selfMotivation,
+              activityPositions: activityPositionsHtml
+            }
+          }
         });
       });
     });
-  }
+  });
 });
 
-router.get('/manage/:studentId/outlook', authenticate, findStudent, function(req, res, next) {
+router.post('/manage/:studentId/activities/edit/:activityIndex', authenticate, findStudent, function(req, res, next) {
+  req.student.portfolio.activities[req.params.activityIndex].hoursPerWeek = parseInt(req.body.hoursPerWeek);
+  req.student.portfolio.activities[req.params.activityIndex].hoursPerYear = parseInt(req.body.hoursPerYear);
+  req.student.portfolio.activities[req.params.activityIndex].leadership = parseInt(req.body.leadership);
+  req.student.portfolio.activities[req.params.activityIndex].communication = parseInt(req.body.communication);
+  req.student.portfolio.activities[req.params.activityIndex].creativity = parseInt(req.body.creativity);
+  req.student.portfolio.activities[req.params.activityIndex].intelligence = parseInt(req.body.intelligence);
+  req.student.portfolio.activities[req.params.activityIndex].selfMotivation = parseInt(req.body.selfMotivation);
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+      if(err) throw err;
+      db.close();
+      res.json({ status: 1, url: "/consult/manage/" + req.student._id + "/activities" });
+    });
+  });
+});
+
+router.get('/manage/:studentId/activities/remove/:activityIndex', authenticate, findStudent, function(req, res, next) {
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("activities").updateOne({ _id: new ObjectID(req.student.portfolio.activities[req.params.activityIndex].activityId) }, { "$pull": { students: new ObjectID(req.params.studentId) } }, function(err, result) {
+      if(err) throw err;
+      req.student.portfolio.activities.splice(req.params.activityIndex, 1);
+      db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+        if(err) throw err;
+        db.close();
+        res.send("1");
+      });
+    });
+  });
+});
+
+router.get('/manage/:studentId/interests', authenticate, findStudent, function(req, res, next) {
+  var interestsHtml = "";
+  for(let interest of req.student.portfolio.interests)
+    interestsHtml += "<span class='interest' contenteditable='false'>" + interest + "<a href='' class='deleteButton'></a></span>"
   res.layout('layout',
   {
-    title:"IVY: Outlook",
-    head:'<script src="https://d3js.org/d3.v4.min.js"></script><script src="/javascripts/billboard.min.js"></script><link rel="stylesheet" href="/stylesheets/billboard.min.css"><script src="/javascripts/outlook.js"></script><link rel="stylesheet" href="/stylesheets/outlook.css">'
+    title: "IVY: Interests",
+    head: "<script src='/javascripts/manage_interests.js'></script><link rel='stylesheet' href='/stylesheets/manage_interests.css'>"
   },
   {
     body: {
-      block:"outlook",
+      block: "manage_interests",
+      data: {
+        studentName: req.student.name,
+        studentId: req.student._id,
+        interests: interestsHtml
+      }
+    }
+  });
+});
+
+router.post('/manage/:studentId/interests', authenticate, findStudent, function(req, res, next) {
+  req.student.portfolio.interests = req.body["interests[]"];
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+      if(err) throw err;
+      db.close();
+      res.send("1");
+    });
+  });
+});
+
+router.get('/manage/:studentId/overview', authenticate, findStudent, function(req, res, next) {
+  var candidateHtmls = new Array(3);
+  var ordinalStrings = ['First', 'Second', 'Third'];
+  var colleges = {};
+  var majors = {};
+  var familyTypesHtml = "";
+  var siblingCountHtml = "";
+  var parentsEducationsHtml = "";
+  var ethnicitiesHtml = "";
+  var veteranRelativesHtml = "";
+  var activitiesListHtml = "";
+  var studentActivities = [];
+  var activityTypes = {};
+  var activities = {};
+  var semesters = ["", "Spring/Summer", "Fall/Winter"];
+  var interestsHtml = "";
+  MongoClient.connect(url, function(err, db) {
+    db.collection("colleges").find({}).sort({name: 1}).toArray(function(err, result) {
+      if(err) throw err;
+      for(let college of result) colleges[college._id] = college;
+      db.collection("majors").find({}).sort({major: 1}).toArray(function(err, result) {
+        if(err) throw err;
+        for(let major of result) majors[major._id] = major;
+        for(var i = 0; i < 3; i++) {
+          if(req.student.portfolio.candidate[i] == null) candidateHtmls[i] = '<td colspan=2></td>';
+          else candidateHtmls[i] = '<td class="schoolName">' + colleges[req.student.portfolio.candidate[i].schoolId].name +'</td><td class="majorName">' + majors[req.student.portfolio.candidate[i].majorId].major + '</td>';
+        }
+        db.collection("family_types").find({}).sort({type: 1}).toArray(function(err, result) {
+          if(err) throw err;
+          for(familyType of result) if(req.student.portfolio.background.familyTypeId == familyType._id) familyTypesHtml = familyType.type;
+          db.collection("parents_educations").find({}).sort({education: 1}).toArray(function(err, result) {
+            if(err) throw err;
+            for(parentEducation of result) if(req.student.portfolio.background.parentsEducationId == parentEducation._id) parentsEducationsHtml = parentEducation.education
+            if(req.student.portfolio.background.siblingCount > 5) siblingCountHtml = "More than five";
+            else siblingCountHtml = req.student.portfolio.background.siblingCount;
+            for(var activity of req.student.portfolio.activities)
+              studentActivities.push(activity.activityId);
+            db.collection("activities").aggregate([
+              {
+                $match: { _id: { $in: studentActivities } }
+              }
+            ]).toArray(function(err, result) {
+              if(err) throw err;
+              for(let activity of result) activities[activity._id] = activity;
+              db.collection("activity_types").find({}).toArray(function(err, result) {
+                if(err) throw err;
+                db.close();
+                for(let type of result) activityTypes[type._id] = type;
+                for(var i in studentActivities)
+                activitiesListHtml += "<tr><td>" + activities[studentActivities[i]].name + " (" + activities[studentActivities[i]].year + ", " + semesters[activities[studentActivities[i]].semester] + ")" + "</td><td>" + activityTypes[activities[studentActivities[i]].typeId].type + "</td></tr>";
+                for(let interest of req.student.portfolio.interests)
+                  interestsHtml += "<span class='interest'>" + interest + "</span>"
+                res.layout('layout',
+                {
+                  title:"IVY: Overview",
+                  head:'<script src="/javascripts/overview.js"></script><link rel="stylesheet" href="/stylesheets/overview.css">'
+                },
+                {
+                  body: {
+                    block:"overview",
+                    data: {
+                      studentName: req.student.name,
+                      studentId: req.student._id,
+                      SATVerbal: req.student.portfolio.academic.SATVerbal,
+                      SATWriting: req.student.portfolio.academic.SATWriting,
+                      SATMath: req.student.portfolio.academic.SATMath,
+                      GPA: req.student.portfolio.academic.GPA,
+                      firstCandidate: candidateHtmls[0],
+                      secondCandidate: candidateHtmls[1],
+                      thirdCandidate: candidateHtmls[2],
+                      familyTypes: familyTypesHtml,
+                      siblingCount: siblingCountHtml,
+                      parentsEducations: parentsEducationsHtml,
+                      activities: activitiesListHtml,
+                      leadership: req.student.portfolio.basic.leadership,
+                      communication: req.student.portfolio.basic.communication,
+                      creativity: req.student.portfolio.basic.creativity,
+                      intelligence: req.student.portfolio.basic.intelligence,
+                      motivation: req.student.portfolio.basic.motivation,
+                      character: req.student.portfolio.basic.character,
+                      interests: interestsHtml
+                    }
+                  }
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+});
+
+router.get('/manage/:studentId/portfolio', authenticate, findStudent, function(req, res, next) {
+  res.layout('layout',
+  {
+    title:"IVY: Portfolio",
+    head:'<script src="https://d3js.org/d3.v4.min.js"></script><script src="/javascripts/billboard.min.js"></script><link rel="stylesheet" href="/stylesheets/billboard.min.css"><script src="/javascripts/portfolio.js"></script><link rel="stylesheet" href="/stylesheets/portfolio.css">'
+  },
+  {
+    body: {
+      block:"portfolio",
       data: {
         studentName: req.student.name,
         studentId: req.student._id
@@ -551,7 +791,7 @@ router.post('/new', authenticate, function(req, res, next) {
       highschoolEntranceYear: parseInt(req.body.highschoolEntranceYear),
       highschool: new ObjectID(req.body.highschool),
       portfolio: {
-        curricular: {},
+        academic: {},
         candidate: new Array(3),
         background: {},
         activities: []

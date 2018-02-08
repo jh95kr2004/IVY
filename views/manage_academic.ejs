@@ -23,9 +23,9 @@
     <div class="row justify-content-start">
       <div class='col'></div>
       <div class='col-12 col-md-10'>
-        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Curricular Info</span></div>
+        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Academic Info</span></div>
         <div id='descriptionDiv' class='description'>Make sure to put in as much information as possible.</div>
-        <div id="curricularInfoDiv" class="form-group input-div">
+        <div id="academicInfoDiv" class="form-group input-div">
           <div class="row">
             <div class="col-6">
               <label for="SATVerbal">SAT Verbal</label>
@@ -47,44 +47,8 @@
             </div>
           </div>
           <div class='button-group'>
-            <button type="button" class="btn btn-primary btn-lg rightAlign" id="nextButton">NEXT</button>
-            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
-          </div>
-        </div>
-        <div id="extraCurricularInfoDiv" class="form-group input-div d-none">
-          <div class="row">
-            <div class="col-6">
-              <label for="leadership">Leadership</label>
-              <input name="leadership" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="leadership" required value="<%- leadership %>">
-            </div>
-            <div class="col-6">
-              <label for="communication">Communication</label>
-              <input name="communication" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="communication" required value="<%- communication %>">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <label for="creativity">Creativity</label>
-              <input name="creativity" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="creativity" required value="<%- creativity %>">
-            </div>
-            <div class="col-6">
-              <label for="intelligence">Intelligence</label>
-              <input name="intelligence" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="intelligence" required value="<%- intelligence %>">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <label for="motivation">Motivation</label>
-              <input name="motivation" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="motivation" required value="<%- motivation %>">
-            </div>
-            <div class="col-6">
-              <label for="character">Character</label>
-              <input name="character" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="character" required value="<%- character %>">
-            </div>
-          </div>
-          <div class='button-group'>
             <button type="button" class="btn btn-primary btn-lg rightAlign" id="saveButton">SAVE</button>
-            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backButton">BACK</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
           </div>
         </div>
       </div>

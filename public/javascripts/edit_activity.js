@@ -1,22 +1,12 @@
 $(function() {
-  $("div#participationDiv input.form-control").keyup(function() {
+  $("input.form-control").keyup(function() {
     if($(this).val() == "" || $(this).is(":valid")) $("#nextToPortfolioImpactButton").removeAttr("disabled");
     else $("#nextToPortfolioImpactButton").attr("disabled", "true");
   });
 
-  $("div#participationDiv input.form-control").change(function() {
+  $("input.form-control").change(function() {
     if($(this).val() == "" || $(this).is(":valid")) $("#nextToPortfolioImpactButton").removeAttr("disabled");
     else $("#nextToPortfolioImpactButton").attr("disabled", "true");
-  });
-
-  $("div#portfolioImpactDiv input.form-control").keyup(function() {
-    if($(this).val() == "" || $(this).is(":valid")) $("#saveButton").removeAttr("disabled");
-    else $("#saveButton").attr("disabled", "true");
-  });
-
-  $("div#portfolioImpactDiv input.form-control").change(function() {
-    if($(this).val() == "" || $(this).is(":valid")) $("#saveButton").removeAttr("disabled");
-    else $("#saveButton").attr("disabled", "true");
   });
 
   $("#cancelButton").click(function() {
@@ -62,11 +52,10 @@ $(function() {
     }).done(function(data) {
       console.log(data);
       if(data.status == 1) {
-        alert("Added new activity successfully!");
+        alert("Activity information is modified successfully!");
         window.location = data.url;
       }
       else if(data.status == 0) alert("You entered wrong data. Please check and re-try.");
-      else if(data.status == -1) alert("This activity is already added to this student.")
     });
   });
 });

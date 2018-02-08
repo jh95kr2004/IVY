@@ -1,0 +1,37 @@
+div#titleDiv {
+  position: relative;
+  width: 100%;
+}
+
+button#doneButton {
+  position: absolute;
+  right: 0;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+div#overviewDiv > div {
+  padding-top: 1.5rem;
+}
+
+div#overviewDiv > div table {
+  width: 100%;
+}
+
+div#overviewDiv > div a {
+  padding-left: .5rem;
+  font-size: .7rem;
+}
+
+div#overviewDiv > div table th, td:first-child {
+  width: 30%;
+}
+
+div#overviewDiv > div table th, td {
+  padding-top: .3rem;
+}
+
+span.interest {
+  display: inline-block;
+  padding-right: 1rem;
+}

@@ -33,6 +33,13 @@ $(function() {
       $("#saveButton").attr("disabled", "true");
   });
 
+  $("#basicInformationDiv input.form-control").change(function() {
+    if($("#activityType").prop("selectedIndex") > 0 && $("#activityDescription select:not(.d-none)").prop("selectedIndex") > 0 && $("#year").is(":valid"))
+      $("#saveButton").removeAttr("disabled");
+    else
+      $("#saveButton").attr("disabled", "true");
+  });
+
   $("#cancelButton").click(function() {
     window.history.back();
   });

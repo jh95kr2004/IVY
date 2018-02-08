@@ -68,6 +68,11 @@ div#suggestedActivitiesDiv {
   padding-bottom: 5rem;
 }
 
+a.editButton {
+  float: right;
+  color: #007bff;
+}
+
 .bb-tooltip-container {
   color: #000;
 }

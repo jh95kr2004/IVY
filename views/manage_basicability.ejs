@@ -1,0 +1,70 @@
+<body class='open-sans'>
+  <nav class="navbar navbar-toggleable-md navbar-light">
+    <a class="navbar-brand" href="/">IVY</a>
+    <!-- button for small size screen -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="/consult">DASHBOARD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">ACCOUNT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id='mainContainer' class='container'>
+    <div class="row justify-content-start">
+      <div class='col'></div>
+      <div class='col-12 col-md-10'>
+        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Basic Ability Info</span></div>
+        <div id='descriptionDiv' class='description'>Make sure to put in as much information as possible.</div>
+        <div id="academicInfoDiv" class="form-group input-div">
+          <div id="basicAbilityInfoDiv" class="form-group input-div">
+            <div class="row">
+              <div class="col-6">
+                <label for="leadership">Leadership</label>
+                <input name="leadership" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="leadership" required value="<%- leadership %>">
+              </div>
+              <div class="col-6">
+                <label for="communication">Communication</label>
+                <input name="communication" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="communication" required value="<%- communication %>">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <label for="creativity">Creativity</label>
+                <input name="creativity" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="creativity" required value="<%- creativity %>">
+              </div>
+              <div class="col-6">
+                <label for="intelligence">Intelligence</label>
+                <input name="intelligence" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="intelligence" required value="<%- intelligence %>">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <label for="motivation">Motivation</label>
+                <input name="motivation" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="motivation" required value="<%- motivation %>">
+              </div>
+              <div class="col-6">
+                <label for="character">Character</label>
+                <input name="character" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="character" required value="<%- character %>">
+              </div>
+            </div>
+            <div class='button-group'>
+              <button type="button" class="btn btn-primary btn-lg rightAlign" id="saveButton">SAVE</button>
+              <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='col'></div>
+    </div>
+  </div>
+</body>

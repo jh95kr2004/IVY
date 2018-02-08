@@ -1,0 +1,37 @@
+div#interestsDiv {
+  padding: .2rem;
+  word-wrap: break-word;
+  cursor: text;
+}
+
+span.interest {
+  background-color: #EBF5F4;
+  margin-right: .25rem;
+  margin-bottom: .25rem;
+  border: 1px solid rgba(0, 0, 0, .15);
+  border-radius: .25rem;
+  padding: 0 .25rem 0 .25rem;
+  display: inline-block;
+}
+
+span.interest.removeFocus {
+  background-color: #828886;
+  color: #FFF;
+}
+
+span.interest.removeFocus a.deleteButton {
+  color: #FFF;
+}
+
+a.deleteButton {
+  margin-left: .25rem;
+  text-decoration: none;
+}
+
+a.deleteButton:after {
+  content: '×';
+}
+
+input#interestInput {
+  border: none;
+}

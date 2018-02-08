@@ -24,7 +24,7 @@
       <div class='col'></div>
       <div class='col-12 col-md-10'>
         <div id='titleDiv' class='h1'>
-          <span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Add Activity</span>: <span id='activityName'></span><%- activityName %> (<%- activityYear %>)<span id='activityId' class='hidden'><%- activityId %></span>
+          <span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'><%- title %></span>: <span id='activityName'></span><%- activityName %> (<%- activityYear %>)<span id='activityId' class='hidden'><%- activityId %></span>
         </div>
         <div id='descriptionDiv' class='description'>Enter partication information about the activty of this student.</div>
         <div id="participationDiv" class="form-group input-div">
@@ -32,7 +32,7 @@
             <div class="col-6">
               <label for="position">Position</label>
               <select class="custom-select form-control" id="position">
-                <option selected>Choose...</option>
+                <option>Choose...</option>
                 <%- activityPositions %>
               </select>
             </div>
@@ -40,15 +40,15 @@
           <div class="row">
             <div class="col-6">
               <label for="hoursPerWeek">Hours Per Week</label>
-              <input name="hoursPerWeek" type="number" class="form-control" min="1" max="60" placeholder="1-60" id="hoursPerWeek" required>
+              <input name="hoursPerWeek" type="number" class="form-control" min="0" max="60" placeholder="0-60" id="hoursPerWeek" value="<%- hoursPerWeek %>" required>
             </div>
             <div class="col-6">
               <label for="hoursPerYear">Hours Per Year</label>
-              <input name="hoursPerYear" type="number" class="form-control" min="1" max="1023" placeholder="1-1023" id="hoursPerYear" required>
+              <input name="hoursPerYear" type="number" class="form-control" min="0" max="1023" placeholder="0-1023" id="hoursPerYear" value="<%- hoursPerYear %>" required>
             </div>
           </div>
           <div class='button-group'>
-            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="nextToPortfolioImpactButton">NEXT</button>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" id="nextToPortfolioImpactButton">NEXT</button>
             <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
           </div>
         </div>
@@ -56,31 +56,31 @@
           <div class="row">
             <div class="col-6">
               <label for="leadership">Leadership</label>
-              <input name="leadership" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="leadership" required>
+              <input name="leadership" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="leadership" value="<%- leadership %>" required>
             </div>
             <div class="col-6">
               <label for="communication">Communication</label>
-              <input name="communication" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="communication" required>
+              <input name="communication" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="communication" value="<%- communication %>" required>
             </div>
           </div>
           <div class="row">
             <div class="col-6">
               <label for="creativity">Creativity</label>
-              <input name="creativity" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="creativity" required>
+              <input name="creativity" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="creativity" value="<%- creativity %>" required>
             </div>
             <div class="col-6">
               <label for="intelligence">Intelligence</label>
-              <input name="intelligence" type="number" class="form-control" min="1" max="1023" placeholder="0-10" id="intelligence" required>
+              <input name="intelligence" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="intelligence" value="<%- intelligence %>" required>
             </div>
           </div>
           <div class="row">
             <div class="col-6">
               <label for="selfMotivation">Self Motivation</label>
-              <input name="selfMotivation" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="selfMotivation" required>
+              <input name="selfMotivation" type="number" class="form-control" min="0" max="10" placeholder="0-10" id="selfMotivation" value="<%- selfMotivation %>" required>
             </div>
           </div>
           <div class='button-group'>
-            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="saveButton">SAVE</button>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" id="saveButton">SAVE</button>
             <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backToParticipationButton">BACK</button>
           </div>
         </div>

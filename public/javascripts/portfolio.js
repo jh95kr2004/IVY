@@ -6,13 +6,13 @@ $(function() {
   $.get("/consult/manage/" + $("#studentId").text() + "/activities/list", {})
   .done(function(d) {
     data = d;
-    if(!("leadership" in data.student.portfolio.curricular)
-    || !("communication" in data.student.portfolio.curricular)
-    || !("creativity" in data.student.portfolio.curricular)
-    || !("intelligence" in data.student.portfolio.curricular)
-    || !("motivation" in data.student.portfolio.curricular)
-    || !("character" in data.student.portfolio.curricular)) {
-      alert("Portfolio of this student is not complete. Please check curricular information.")
+    if(!("leadership" in data.student.portfolio.basic)
+    || !("communication" in data.student.portfolio.basic)
+    || !("creativity" in data.student.portfolio.basic)
+    || !("intelligence" in data.student.portfolio.basic)
+    || !("motivation" in data.student.portfolio.basic)
+    || !("character" in data.student.portfolio.basic)) {
+      alert("Portfolio of this student is not complete. Please check basic ability section of student.")
       window.history.back();
     }
     for(var i = 0; i < 8; i++) {
@@ -26,29 +26,38 @@ $(function() {
         "activities": []
       }
     }
-    credits[0].credit = (parseInt(data.student.portfolio.curricular.leadership)
-    + parseInt(data.student.portfolio.curricular.communication)
-    + parseInt(data.student.portfolio.curricular.creativity)
-    + parseInt(data.student.portfolio.curricular.intelligence)
-    + parseInt(data.student.portfolio.curricular.motivation)
-    + parseInt(data.student.portfolio.curricular.character)) / 6.0;
-    credits[0].leadership = parseInt(data.student.portfolio.curricular.leadership);
-    credits[0].communication = parseInt(data.student.portfolio.curricular.communication);
-    credits[0].creativity = parseInt(data.student.portfolio.curricular.creativity);
-    credits[0].intelligence = parseInt(data.student.portfolio.curricular.intelligence);
-    credits[0].selfMotivation = parseInt(data.student.portfolio.curricular.motivation);
-    for(let activity of data.student.portfolio.activities) {
+    credits[0].credit = (parseInt(data.student.portfolio.basic.leadership)
+    + parseInt(data.student.portfolio.basic.communication)
+    + parseInt(data.student.portfolio.basic.creativity)
+    + parseInt(data.student.portfolio.basic.intelligence)
+    + parseInt(data.student.portfolio.basic.motivation)
+    + parseInt(data.student.portfolio.basic.character)) / 6.0;
+    credits[0].leadership = parseInt(data.student.portfolio.basic.leadership);
+    credits[0].communication = parseInt(data.student.portfolio.basic.communication);
+    credits[0].creativity = parseInt(data.student.portfolio.basic.creativity);
+    credits[0].intelligence = parseInt(data.student.portfolio.basic.intelligence);
+    credits[0].selfMotivation = parseInt(data.student.portfolio.basic.motivation);
+    for(var i in data.student.portfolio.activities) {
+      var activity = data.student.portfolio.activities[i];
       var creditIndex = (parseInt(data.activities[activity.activityId].year) - parseInt(data.student.highschoolEntranceYear)) * 2 + parseInt(data.activities[activity.activityId].semester) - 1;
-      credits[creditIndex].leadership += parseInt(activity.leadership);
-      credits[creditIndex].communication += parseInt(activity.communication);
-      credits[creditIndex].creativity += parseInt(activity.creativity);
-      credits[creditIndex].intelligence += parseInt(activity.intelligence);
-      credits[creditIndex].selfMotivation += parseInt(activity.selfMotivation);
-      credits[creditIndex].activities.push(data.activities[activity.activityId]);
       $("div#noSummary").addClass("d-none");
       $($("div#summaryDiv div.col-6")[creditIndex]).removeClass("d-none");
-      $($("div#summaryDiv div.col-6")[creditIndex]).find("ul").append("<li>" + data.activities[activity.activityId].name + " (" + data.activities[activity.activityId].year + ")</li>")
+      if("leadership" in activity && "communication" in activity && "creativity" in activity && "intelligence" in activity && "selfMotivation" in activity
+        && activity.leadership != null && activity.communication != null && activity.creativity != null && activity.intelligence != null && activity.selfMotivation != null
+        && activity.leadership != NaN && activity.communication != NaN && activity.creativity != NaN && activity.intelligence != NaN && activity.selfMotivation != NaN) {
+        credits[creditIndex].leadership += parseInt(activity.leadership);
+        credits[creditIndex].communication += parseInt(activity.communication);
+        credits[creditIndex].creativity += parseInt(activity.creativity);
+        credits[creditIndex].intelligence += parseInt(activity.intelligence);
+        credits[creditIndex].selfMotivation += parseInt(activity.selfMotivation);
+        $($("div#summaryDiv div.col-6")[creditIndex]).find("ul").append("<li>" + data.activities[activity.activityId].name + " (" + data.activities[activity.activityId].year + ")</li>");
+        credits[creditIndex].activities.push({activity: data.activities[activity.activityId], affect: true, index: i});
+      } else {
+        $($("div#summaryDiv div.col-6")[creditIndex]).find("ul").append("<li>" + data.activities[activity.activityId].name + " (" + data.activities[activity.activityId].year + ") *</li>");
+        credits[creditIndex].activities.push({activity: data.activities[activity.activityId], affect: false, index: i});
+      }
     }
+    console.log(credits);
     for(var i = 1; i < 8; i++) {
       credits[i].leadership += credits[i - 1].leadership
       credits[i].communication += credits[i - 1].communication
@@ -87,10 +96,8 @@ $(function() {
           $("span#grade").text(Math.floor(d.index / 2) + 9 + "th grade");
           $("span#semester").text(d.index % 2 == 0 ? "(Spring - Summer)" : "(Fall - Winter)");
           $("ul#activityList").html("");
-          for(let activity of credits[d.index].activities) {
-            $("<li></li>").text(activity.name + " (" + activity.year + ")").appendTo($("ul#activityList"));
-            console.log(activity.name);
-          }
+          for(let activity of credits[d.index].activities)
+            $("<li></li>").html(activity.activity.name + " (" + activity.activity.year + ")" + ((activity.affect == false) ? " *" : "") + " <a href='/consult/manage/" + $("#studentId").text() + "/activities/edit/" + activity.index + "' class='editButton'>EDIT</a>").appendTo($("ul#activityList"));
         }
       },
       axis: {

@@ -1,0 +1,20 @@
+div#candidateSchoolsDiv table {
+  width: 100%;
+}
+
+div#candidateSchoolsDiv table tr td {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+div#candidateSchoolsDiv table tr td.majorName {
+  text-align: center;
+}
+
+div#candidateSchoolsDiv table tr td.changeButton {
+  text-align: right;
+}
+
+div#candidateSchoolsDiv table tr:last-child td {
+  border-bottom: 1px solid #E9ECEF
+}
