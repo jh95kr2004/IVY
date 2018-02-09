@@ -59,7 +59,7 @@ This service doesn't have any encryption or security function. So be careful to 
 - Improve administrator page.
 
 ## Known bugs
-- Cannot divide interests using comman when type 2-byte charaters.
+- Cannot divide interests using comma when type 2-byte charaters.
 
 ## Built With
 - Front-End: HTML5, CSS3, Javascript, [billboard.js](https://naver.github.io/billboard.js/)
