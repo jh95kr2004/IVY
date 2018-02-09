@@ -698,12 +698,22 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
         }
         db.collection("family_types").find({}).sort({type: 1}).toArray(function(err, result) {
           if(err) throw err;
-          for(familyType of result) if(req.student.portfolio.background.familyTypeId == familyType._id) familyTypesHtml = familyType.type;
+          if("familyTypeId" in req.student.portfolio.background) {
+          for(familyType of result)
+            if(req.student.portfolio.background.familyTypeId == familyType._id)
+              familyTypesHtml = familyType.type;
+          } else familyTypesHtml = "";
           db.collection("parents_educations").find({}).sort({education: 1}).toArray(function(err, result) {
             if(err) throw err;
-            for(parentEducation of result) if(req.student.portfolio.background.parentsEducationId == parentEducation._id) parentsEducationsHtml = parentEducation.education
-            if(req.student.portfolio.background.siblingCount > 5) siblingCountHtml = "More than five";
-            else siblingCountHtml = req.student.portfolio.background.siblingCount;
+            if("parentsEducationId" in req.student.portfolio.background) {
+            for(parentEducation of result)
+              if(req.student.portfolio.background.parentsEducationId == parentEducation._id)
+                parentsEducationsHtml = parentEducation.education
+            } else parentsEducationsHtml = "";
+            if("siblingCount" in req.student.portfolio.background) {
+              if(req.student.portfolio.background.siblingCount > 5) siblingCountHtml = "More than five";
+              else siblingCountHtml = req.student.portfolio.background.siblingCount;
+            } else siblingCountHtml = "";
             for(var activity of req.student.portfolio.activities)
               studentActivities.push(activity.activityId);
             db.collection("activities").aggregate([
@@ -732,10 +742,10 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                     data: {
                       studentName: req.student.name,
                       studentId: req.student._id,
-                      SATVerbal: req.student.portfolio.academic.SATVerbal,
-                      SATWriting: req.student.portfolio.academic.SATWriting,
-                      SATMath: req.student.portfolio.academic.SATMath,
-                      GPA: req.student.portfolio.academic.GPA,
+                      SATVerbal: (("SATVerbal" in req.student.portfolio.academic) ? req.student.portfolio.academic.SATVerbal : ""),
+                      SATWriting: (("SATWriting" in req.student.portfolio.academic) ? req.student.portfolio.academic.SATWriting : ""),
+                      SATMath: (("SATMath" in req.student.portfolio.academic) ? req.student.portfolio.academic.SATMath : ""),
+                      GPA: (("GPA" in req.student.portfolio.academic) ? req.student.portfolio.academic.GPA : ""),
                       firstCandidate: candidateHtmls[0],
                       secondCandidate: candidateHtmls[1],
                       thirdCandidate: candidateHtmls[2],
@@ -743,12 +753,12 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                       siblingCount: siblingCountHtml,
                       parentsEducations: parentsEducationsHtml,
                       activities: activitiesListHtml,
-                      leadership: req.student.portfolio.basic.leadership,
-                      communication: req.student.portfolio.basic.communication,
-                      creativity: req.student.portfolio.basic.creativity,
-                      intelligence: req.student.portfolio.basic.intelligence,
-                      motivation: req.student.portfolio.basic.motivation,
-                      character: req.student.portfolio.basic.character,
+                      leadership: (("leadership" in req.student.portfolio.basic) ? req.student.portfolio.basic.leadership : ""),
+                      communication: (("communication" in req.student.portfolio.basic) ? req.student.portfolio.basic.communication : ""),
+                      creativity: (("creativity" in req.student.portfolio.basic) ? req.student.portfolio.basic.creativity : ""),
+                      intelligence: (("intelligence" in req.student.portfolio.basic) ? req.student.portfolio.basic.intelligence : ""),
+                      motivation: (("motivation" in req.student.portfolio.basic) ? req.student.portfolio.basic.motivation : ""),
+                      character: (("character" in req.student.portfolio.basic) ? req.student.portfolio.basic.character : ""),
                       interests: interestsHtml
                     }
                   }
@@ -794,7 +804,9 @@ router.post('/new', authenticate, function(req, res, next) {
         academic: {},
         candidate: new Array(3),
         background: {},
-        activities: []
+        basic: {},
+        activities: [],
+        interests: []
       }
     };
     MongoClient.connect(url, function(err, db) {
