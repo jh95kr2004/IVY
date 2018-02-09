@@ -44,7 +44,10 @@ Default account of administrator:
 If you want to change the ID of administrator account, you have to modify it in the MongoDB manually. But password can be changed in the account page of administrator.
 
 ### Make first consultant account
-You can add consultant account via administrator page. Make first consultant account and enjoy the service.
+You can add consultant account via administrator page. Make first consultant account and enjoy the service. Initial passwor d of consultant is *123*.
+
+## Caution
+This service doesn't have any encryption or security function. So be careful to use your usual password.
 
 ## Built With
 - Front-End: HTML5, CSS3, Javascript, [billboard.js](https://naver.github.io/billboard.js/)
