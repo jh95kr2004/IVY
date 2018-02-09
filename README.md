@@ -49,6 +49,18 @@ You can add consultant account via administrator page. Make first consultant acc
 ## Caution
 This service doesn't have any encryption or security function. So be careful to use your usual password.
 
+## To Do List
+- 'EDIT' and 'REMOVE' function for students.
+- Make 'CONTACT' page.
+- Make 'LEARN' MORE page.
+- Add radar chart in the portfolio page.
+- Add Secure HTTP (HTTPS)
+- Add Activity recommendation function.
+- Improve administrator page.
+
+## Known bugs
+- Cannot divide interests using comman when type 2-byte charaters.
+
 ## Built With
 - Front-End: HTML5, CSS3, Javascript, [billboard.js](https://naver.github.io/billboard.js/)
 - Back-End: [Node.js](https://nodejs.org/), [MongoDB](https://www.mongodb.com/)
