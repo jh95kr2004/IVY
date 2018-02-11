@@ -7,6 +7,10 @@ $(function() {
     window.location = "/consult/manage/" + $("#studentId").text() + "/activities/edit/" + $("tr.selected td.code").text();
   });
 
+  $(".resultContainer tbody tr").dblclick(function() {
+    window.location = "/consult/manage/" + $("#studentId").text() + "/activities/edit/" + $(this).find("td.code").text();
+  });
+
   $("#removeActivityButton").click(function() {
     $.get("/consult/manage/" + $("#studentId").text() + "/activities/remove/" + $("tr.selected td.code").text(), {})
     .done(function(data) {
