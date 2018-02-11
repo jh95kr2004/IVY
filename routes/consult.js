@@ -766,6 +766,9 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                 activitiesListHtml += "<tr><td>" + activities[studentActivities[i]].name + " (" + activities[studentActivities[i]].year + ", " + semesters[activities[studentActivities[i]].semester] + ")" + "</td><td>" + activityTypes[activities[studentActivities[i]].typeId].type + "</td></tr>";
                 for(let interest of req.student.portfolio.interests)
                   interestsHtml += "<span class='interest'>" + interest + "</span>"
+                var grade = (new Date()).getFullYear() - parseInt(req.student.highschoolEntranceYear) + 9;
+                if(grade > 12) grade = "Undergraduate";
+                else grade += "th grade";
                 res.layout('layout',
                 {
                   title:"IVY: Overview",
@@ -777,6 +780,7 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                     data: {
                       studentName: req.student.name,
                       studentId: req.student._id,
+                      currentGrade: grade,
                       SATVerbal: (("SATVerbal" in req.student.portfolio.academic) ? req.student.portfolio.academic.SATVerbal : ""),
                       SATWriting: (("SATWriting" in req.student.portfolio.academic) ? req.student.portfolio.academic.SATWriting : ""),
                       SATMath: (("SATMath" in req.student.portfolio.academic) ? req.student.portfolio.academic.SATMath : ""),
