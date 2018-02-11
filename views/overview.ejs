@@ -27,7 +27,17 @@
           <span id="title"><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Overview</span></span>
           <button type="button" class="btn btn-primary btn-lg" id="doneButton">DONE</button>
         </div>
-        <div id='memoDiv'><%- memo %></div>
+        <div id="memoDiv">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="input-group-text">Memo</span>
+            </div>
+            <textarea id="memo" class="form-control" aria-label="Memo"><%- memo %></textarea>
+          </div>
+          <div>
+            <small id="memoHelp" class="text-muted">Memo will be saved automatically.</small>
+          </div>
+        </div>
         <div id="overviewDiv">
           <div id="academicInfoDiv">
             <p class='h3'>Academic Information<a href='/consult/manage/<%- studentId %>/academic'>EDIT</a></p>

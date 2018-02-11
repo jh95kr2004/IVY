@@ -110,6 +110,10 @@ router.post('/manage/:studentId/', authenticate, findStudent, function(req, res,
   });
 });
 
+router.get('/manage/:studentId/memo', authenticate, findStudent, function(req, res, next) {
+  res.send(req.student.memo);
+});
+
 router.get('/manage/:studentId/academic', authenticate, findStudent, function(req, res, next) {
   res.layout('layout',
   {
@@ -806,20 +810,15 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
   });
 });
 
-router.get('/manage/:studentId/portfolio', authenticate, findStudent, function(req, res, next) {
-  res.layout('layout',
-  {
-    title:"IVY: Portfolio",
-    head:'<script src="https://d3js.org/d3.v4.min.js"></script><script src="/javascripts/billboard.min.js"></script><link rel="stylesheet" href="/stylesheets/billboard.min.css"><script src="/javascripts/portfolio.js"></script><link rel="stylesheet" href="/stylesheets/portfolio.css">'
-  },
-  {
-    body: {
-      block:"portfolio",
-      data: {
-        studentName: req.student.name,
-        studentId: req.student._id
-      }
-    }
+router.post('/manage/:studentId/overview', authenticate, findStudent, function(req, res, next) {
+  req.student.memo = req.body.memo;
+  console.log(req.body.memo);
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+      if(err) throw err;
+      db.close();
+    });
   });
 });
 
