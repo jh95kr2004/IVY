@@ -27,6 +27,7 @@
           <span id="title"><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></span> - <span id='title'>Overview</span></span>
           <button type="button" class="btn btn-primary btn-lg" id="doneButton">DONE</button>
         </div>
+        <div id='memoDiv'><%- memo %></div>
         <div id="overviewDiv">
           <div id="academicInfoDiv">
             <p class='h3'>Academic Information<a href='/consult/manage/<%- studentId %>/academic'>EDIT</a></p>
@@ -53,9 +54,9 @@
             <p class='h3'>Background<a href='/consult/manage/<%- studentId %>/background'>EDIT</a></p>
             <table>
               <tbody>
-                <tr><th>Family Types</th><td><%- familyTypes %></td></tr>
-                <tr><th>Sibling Count</th><td><%- siblingCount %></td></tr>
-                <tr><th>Parents Education</th><td><%- parentsEducations %></td></tr>
+                <tr><th>Family Types</th><td colspan=3><%- familyTypes %></td></tr>
+                <tr><th>Sibling Count</th><td colspan=3><%- siblingCount %></td></tr>
+                <tr><th>Parents Education (Highest)</th><td><%- parentsEducationLevel %> (<%- parentsEducationSchool %>, <%- parentsEducationMajor %>)</td></tr>
               </tbody>
             </table>
           </div>

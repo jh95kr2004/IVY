@@ -5,7 +5,9 @@ $(function() {
 
   if($("#familyType").prop("selectedIndex") <= 0
   || $("#siblingCount").prop("selectedIndex") <= 0
-  || $("#parentsEducation").prop("selectedIndex") <= 0
+  || $("#parentsEducationLevel").prop("selectedIndex") <= 0
+  || $("#parentsEducationSchool").prop("selectedIndex") <= 0
+  || $("#parentsEducationMajor").prop("selectedIndex") <= 0
   /*|| $("#ethnicity").prop("selectedIndex") <= 0
   || $("#veteranRelatives").prop("selectedIndex") <= 0*/)
     $("#saveButton").attr("disabled", "true");
@@ -15,7 +17,9 @@ $(function() {
   $("#backgroundDiv .form-control").change(function() {
     if($("#familyType").prop("selectedIndex") <= 0
     || $("#siblingCount").prop("selectedIndex") <= 0
-    || $("#parentsEducation").prop("selectedIndex") <= 0
+    || $("#parentsEducationLevel").prop("selectedIndex") <= 0
+    || $("#parentsEducationSchool").prop("selectedIndex") <= 0
+    || $("#parentsEducationMajor").prop("selectedIndex") <= 0
     /*|| $("#ethnicity").prop("selectedIndex") <= 0
     || $("#veteranRelatives").prop("selectedIndex") <= 0*/)
       $("#saveButton").attr("disabled", "true");
@@ -26,7 +30,9 @@ $(function() {
   $("#saveButton").click(function() {
     if($("#familyType").prop("selectedIndex") <= 0
     || $("#siblingCount").prop("selectedIndex") <= 0
-    || $("#parentsEducation").prop("selectedIndex") <= 0
+    || $("#parentsEducationLevel").prop("selectedIndex") <= 0
+    || $("#parentsEducationSchool").prop("selectedIndex") <= 0
+    || $("#parentsEducationMajor").prop("selectedIndex") <= 0
     /*|| $("#ethnicity").prop("selectedIndex") <= 0
     || $("#veteranRelatives").prop("selectedIndex") <= 0*/) {
       $(this).attr("disabled", "true");
@@ -36,7 +42,9 @@ $(function() {
     $.post(window.location, {
       familyTypeId: $("#familyType").val(),
       siblingCount: $("#siblingCount").val(),
-      parentsEducationId: $("#parentsEducation").val(),
+      parentsEducationLevelId: $("#parentsEducationLevel").val(),
+      parentsEducationSchoolId: $("#parentsEducationSchool").val(),
+      parentsEducationMajorId: $("#parentsEducationMajor").val(),
       /*ethnicity: $("#ethnicity").val(),
       veteranRelatives: $("#veteranRelatives").val()*/
     }).done(function(res) {

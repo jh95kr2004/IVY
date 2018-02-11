@@ -191,7 +191,6 @@ router.get('/manage/:studentId/candidate', authenticate, findStudent, function(r
         if(err) throw err;
         db.close();
         for(let major of result) majors[major._id] = major;
-        console.log(colleges, majors);
         for(var i = 0; i < 3; i++) {
           if(req.student.portfolio.candidate[i] == null) candidateHtmls[i] = '<td colspan=3><a href="/consult/manage/' + req.student._id + '/candidate/' + i + '">Select ' + ordinalStrings[i] + ' Candidate</a></td>';
           else candidateHtmls[i] = '<td class="schoolName">' + colleges[req.student.portfolio.candidate[i].schoolId].name +'</td><td class="majorName">' + majors[req.student.portfolio.candidate[i].majorId].major + '</td><td class="changeButton"><a href="/consult/manage/' + req.student._id + '/candidate/' + i + '">CHANGE</a></td>'
@@ -271,7 +270,9 @@ router.post('/manage/:studentId/candidate/:candidate', authenticate, findStudent
 router.get('/manage/:studentId/background', authenticate, findStudent, function(req, res, next) {
   var familyTypesHtml = "";
   var siblingCountHtml = "";
-  var parentsEducationsHtml = "";
+  var parentsEducationLevelHtml = "";
+  var parentsEducationSchoolHtml = "";
+  var parentsEducationMajorHtml = "";
   var ethnicitiesHtml = "";
   var veteranRelativesHtml = "";
   MongoClient.connect(url, function(err, db) {
@@ -281,30 +282,45 @@ router.get('/manage/:studentId/background', authenticate, findStudent, function(
         familyTypesHtml += '<option value="' + result[i]._id + '" ' + ((req.student.portfolio.background.familyTypeId == result[i]._id) ? "selected" : "") + '>' + result[i].type + '</option>';
       db.collection("parents_educations").find({}).sort({education: 1}).toArray(function(err, result) {
         if(err) throw err;
-        db.close();
         for(var i in result)
-          parentsEducationsHtml += '<option value="' + result[i]._id + '" ' + ((req.student.portfolio.background.parentsEducationId == result[i]._id) ? "selected" : "") + '>' + result[i].education + '</option>';
-        for(var i = 1; i <= 5; i++)
-          siblingCountHtml += '<option value="' + i + '" ' + ((req.student.portfolio.background.siblingCount == i) ? "selected" : "") + '>' + i + '</option>';
-        siblingCountHtml += '<option value="6" ' + ((req.student.portfolio.background.siblingCount == 6) ? "selected" : "") + '>' + "More than five" + '</option>';
-        res.layout('layout',
-        {
-          title: "IVY: Background",
-          head: "<script src='/javascripts/manage_background.js'></script>"
-        },
-        {
-          body: {
-            block: "manage_background",
-            data: {
-              studentName: req.student.name,
-              studentId: req.student._id,
-              familyTypes: familyTypesHtml,
-              siblingCount: siblingCountHtml,
-              parentsEducations: parentsEducationsHtml,
-              ethnicities: ethnicitiesHtml,
-              veteranRelatives: veteranRelativesHtml
-            }
-          }
+          parentsEducationLevelHtml += '<option value="' + result[i]._id + '" ' + ((req.student.portfolio.background.parentsEducationLevelId == result[i]._id) ? "selected" : "") + '>' + result[i].education + '</option>';
+        parentsEducationLevelHtml += '<option value="Other"' + ((req.student.portfolio.background.parentsEducationLevelId == "Other") ? "selected" : "") + '>' + 'Other...' + '</option>';
+        db.collection("colleges").find({}).sort({name: 1}).toArray(function(err, result) {
+          if(err) throw err;
+          for(var i in result)
+            parentsEducationSchoolHtml += '<option value="' + result[i]._id + '" ' + ((req.student.portfolio.background.parentsEducationSchoolId == result[i]._id) ? "selected" : "") + '>' + result[i].name + '</option>';
+          parentsEducationSchoolHtml += '<option value="Other"' + ((req.student.portfolio.background.parentsEducationSchoolId == "Other") ? "selected" : "") + '>' + 'Other...' + '</option>';
+          db.collection("majors").find({}).sort({major: 1}).toArray(function(err, result) {
+            if(err) throw err;
+            db.close();
+            for(var i in result)
+              parentsEducationMajorHtml += '<option value="' + result[i]._id + '" ' + ((req.student.portfolio.background.parentsEducationMajorId == result[i]._id) ? "selected" : "") + '>' + result[i].major + '</option>';
+            parentsEducationMajorHtml += '<option value="Other"' + ((req.student.portfolio.background.parentsEducationMajorId == "Other") ? "selected" : "") + '>' + 'Other...' + '</option>';
+            for(var i = 1; i <= 5; i++)
+              siblingCountHtml += '<option value="' + i + '" ' + ((req.student.portfolio.background.siblingCount == i) ? "selected" : "") + '>' + i + '</option>';
+            siblingCountHtml += '<option value="6" ' + ((req.student.portfolio.background.siblingCount == 6) ? "selected" : "") + '>' + "6+" + '</option>';
+            res.layout('layout',
+            {
+              title: "IVY: Background",
+              head: "<script src='/javascripts/manage_background.js'></script>"
+            },
+            {
+              body: {
+                block: "manage_background",
+                data: {
+                  studentName: req.student.name,
+                  studentId: req.student._id,
+                  familyTypes: familyTypesHtml,
+                  siblingCount: siblingCountHtml,
+                  parentsEducationLevel: parentsEducationLevelHtml,
+                  parentsEducationSchool: parentsEducationSchoolHtml,
+                  parentsEducationMajor: parentsEducationMajorHtml,
+                  ethnicities: ethnicitiesHtml,
+                  veteranRelatives: veteranRelativesHtml
+                }
+              }
+            });
+          });
         });
       });
     });
@@ -315,7 +331,9 @@ router.post('/manage/:studentId/background', authenticate, findStudent, function
   req.student.portfolio.background = {
     familyTypeId: req.body.familyTypeId,
     siblingCount: parseInt(req.body.siblingCount),
-    parentsEducationId: req.body.parentsEducationId
+    parentsEducationLevelId: req.body.parentsEducationLevelId,
+    parentsEducationSchoolId: req.body.parentsEducationSchoolId,
+    parentsEducationMajorId: req.body.parentsEducationMajorId
   };
   MongoClient.connect(url, function(err, db) {
     if(err) throw err;
@@ -676,7 +694,9 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
   var majors = {};
   var familyTypesHtml = "";
   var siblingCountHtml = "";
-  var parentsEducationsHtml = "";
+  var parentsEducationLevelHtml = "";
+  var parentsEducationSchoolHtml = "";
+  var parentsEducationMajorHtml = "";
   var ethnicitiesHtml = "";
   var veteranRelativesHtml = "";
   var activitiesListHtml = "";
@@ -705,13 +725,24 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
           } else familyTypesHtml = "";
           db.collection("parents_educations").find({}).sort({education: 1}).toArray(function(err, result) {
             if(err) throw err;
-            if("parentsEducationId" in req.student.portfolio.background) {
-            for(parentEducation of result)
-              if(req.student.portfolio.background.parentsEducationId == parentEducation._id)
-                parentsEducationsHtml = parentEducation.education
-            } else parentsEducationsHtml = "";
+            if("parentsEducationLevelId" in req.student.portfolio.background) {
+              if(req.student.portfolio.background.parentsEducationLevelId == "Other") parentsEducationLevelHtml = "Other";
+              else {
+                for(parentEducationLevel of result)
+                  if(req.student.portfolio.background.parentsEducationLevelId == parentEducationLevel._id)
+                    parentsEducationLevelHtml = parentEducationLevel.education
+              }
+            }
+            if("parentsEducationSchoolId" in req.student.portfolio.background) {
+              if(req.student.portfolio.background.parentsEducationSchoolId == "Other") parentsEducationSchoolHtml = "Other";
+              else if(req.student.portfolio.background.parentsEducationSchoolId in colleges) parentsEducationSchoolHtml = colleges[req.student.portfolio.background.parentsEducationSchoolId].name;
+            }
+            if("parentsEducationMajorId" in req.student.portfolio.background) {
+              if(req.student.portfolio.background.parentsEducationMajorId == "Other") parentsEducationMajorHtml = "Other";
+              else if(req.student.portfolio.background.parentsEducationMajorId in majors) parentsEducationMajorHtml = majors[req.student.portfolio.background.parentsEducationMajorId].major;
+            }
             if("siblingCount" in req.student.portfolio.background) {
-              if(req.student.portfolio.background.siblingCount > 5) siblingCountHtml = "More than five";
+              if(req.student.portfolio.background.siblingCount > 5) siblingCountHtml = "6+";
               else siblingCountHtml = req.student.portfolio.background.siblingCount;
             } else siblingCountHtml = "";
             for(var activity of req.student.portfolio.activities)
@@ -751,7 +782,9 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                       thirdCandidate: candidateHtmls[2],
                       familyTypes: familyTypesHtml,
                       siblingCount: siblingCountHtml,
-                      parentsEducations: parentsEducationsHtml,
+                      parentsEducationLevel: parentsEducationLevelHtml,
+                      parentsEducationSchool: parentsEducationSchoolHtml,
+                      parentsEducationMajor: parentsEducationMajorHtml,
                       activities: activitiesListHtml,
                       leadership: (("leadership" in req.student.portfolio.basic) ? req.student.portfolio.basic.leadership : ""),
                       communication: (("communication" in req.student.portfolio.basic) ? req.student.portfolio.basic.communication : ""),
@@ -759,7 +792,8 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                       intelligence: (("intelligence" in req.student.portfolio.basic) ? req.student.portfolio.basic.intelligence : ""),
                       motivation: (("motivation" in req.student.portfolio.basic) ? req.student.portfolio.basic.motivation : ""),
                       character: (("character" in req.student.portfolio.basic) ? req.student.portfolio.basic.character : ""),
-                      interests: interestsHtml
+                      interests: interestsHtml,
+                      memo: req.student.memo
                     }
                   }
                 });

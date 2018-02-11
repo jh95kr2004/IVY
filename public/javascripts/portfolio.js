@@ -40,6 +40,7 @@ $(function() {
     for(var i in data.student.portfolio.activities) {
       var activity = data.student.portfolio.activities[i];
       var creditIndex = (parseInt(data.activities[activity.activityId].year) - parseInt(data.student.highschoolEntranceYear)) * 2 + parseInt(data.activities[activity.activityId].semester) - 1;
+      if(creditIndex < 0) continue;
       $("div#noSummary").addClass("d-none");
       $($("div#summaryDiv div.col-6")[creditIndex]).removeClass("d-none");
       if("leadership" in activity && "communication" in activity && "creativity" in activity && "intelligence" in activity && "selfMotivation" in activity
@@ -57,7 +58,6 @@ $(function() {
         credits[creditIndex].activities.push({activity: data.activities[activity.activityId], affect: false, index: i});
       }
     }
-    console.log(credits);
     for(var i = 1; i < 8; i++) {
       credits[i].leadership += credits[i - 1].leadership
       credits[i].communication += credits[i - 1].communication

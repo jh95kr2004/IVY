@@ -42,23 +42,43 @@
               </select>
             </div>
           </div>
+          <hr>
+          <div class="row">
+            <div class="col-12">Parent's Education (Highest)</div>
+          </div>
           <div class="row">
             <div class="col-6">
-              <label for="parentsEducation">Parent's Education (Highest)</label>
-              <select class="custom-select form-control" id="parentsEducation">
+              <label for="parentsEducationLevel">Education Level</label>
+              <select class="custom-select form-control" id="parentsEducationLevel">
                 <option>Choose...</option>
-                <%- parentsEducations %>
+                <%- parentsEducationLevel %>
               </select>
             </div>
-            <!--<div class="col-6">
+            <div class="col-6">
+              <label for="parentsEducationSchool">School</label>
+              <select class="custom-select form-control" id="parentsEducationSchool">
+                <option>Choose...</option>
+                <%- parentsEducationSchool %>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="parentsEducationMajor">Major</label>
+              <select class="custom-select form-control" id="parentsEducationMajor">
+                <option>Choose...</option>
+                <%- parentsEducationMajor %>
+              </select>
+            </div>
+          </div>
+          <!--<div class="row">
+            <div class="col-6">
               <label for="ethnicity">Ethnicity</label>
               <select class="custom-select form-control" id="ethnicity">
                 <option selected>Choose...</option>
                 <%- ethnicities %>
               </select>
-            </div>-->
-          </div>
-          <!--<div class="row">
+            </div>
             <div class="col-6">
               <label for="veteranRelatives">Veteran Relatives</label>
               <select class="custom-select form-control" id="veteranRelatives">
