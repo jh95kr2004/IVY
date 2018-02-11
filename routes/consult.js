@@ -822,6 +822,23 @@ router.post('/manage/:studentId/overview', authenticate, findStudent, function(r
   });
 });
 
+router.get('/manage/:studentId/portfolio', authenticate, findStudent, function(req, res, next) {
+  res.layout('layout',
+  {
+    title:"IVY: Portfolio",
+    head:'<script src="https://d3js.org/d3.v4.min.js"></script><script src="/javascripts/billboard.min.js"></script><link rel="stylesheet" href="/stylesheets/billboard.min.css"><script src="/javascripts/portfolio.js"></script><link rel="stylesheet" href="/stylesheets/portfolio.css">'
+  },
+  {
+    body: {
+      block:"portfolio",
+      data: {
+        studentName: req.student.name,
+        studentId: req.student._id
+      }
+    }
+  });
+});
+
 router.get('/new', authenticate, function(req, res, next) {
   res.layout('layout', {title:"IVY: New Student", head:'<script src="/javascripts/new_student.js"></script>'}, {body:{block:"new_student"}});
 });
