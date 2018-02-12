@@ -8,5 +8,5 @@ $(function() {
     $.post(window.location, {
       memo: $("#memo").val()
     });
-  })
+  });
 });

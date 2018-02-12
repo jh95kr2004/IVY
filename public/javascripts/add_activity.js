@@ -52,6 +52,7 @@ $(function() {
 
     $.post(window.location.href, {
       positionId: $("#position").val(),
+      memo: $("#memo").val(),
       hoursPerWeek: parseInt($("#hoursPerWeek").val()),
       hoursPerYear: parseInt($("#hoursPerYear").val()),
       leadership: parseInt($("#leadership").val()),

@@ -84,7 +84,7 @@ router.get('/manage/:studentId/', authenticate, findStudent, function(req, res, 
   res.layout('layout',
   {
     title: "IVY: Manage",
-    head: "<script src='/javascripts/consult.js'></script><script src='/javascripts/manage.js'></script><link rel='stylesheet' href='/stylesheets/manage.css'>"
+    head: "<script src='/javascripts/manage.js'></script><link rel='stylesheet' href='/stylesheets/manage.css'>"
   },
   {
     body: {
@@ -92,6 +92,12 @@ router.get('/manage/:studentId/', authenticate, findStudent, function(req, res, 
       data: {
         studentName: req.student.name,
         studentId : req.student._id,
+        studentsEmail: req.student.studentsEmail,
+        studentsPhoneNumber: req.student.studentsPhoneNumber,
+        studentsFacebook: req.student.studentsFacebook,
+        studentsInstagram: req.student.studentsInstagram,
+        parentsEmail: req.student.parentsEmail,
+        parentsPhoneNumber: req.student.parentsPhoneNumber,
         memo: req.student.memo,
         description: ""
       }
@@ -536,6 +542,7 @@ router.get('/manage/:studentId/activities/add/:activityId', authenticate, findSt
             activityName: req.activity.name,
             activityYear: req.activity.year,
             activityId: req.activity._id,
+            memo: "",
             hoursPerWeek: "",
             hoursPerYear: "",
             leadership: "",
@@ -561,6 +568,7 @@ router.post('/manage/:studentId/activities/add/:activityId', authenticate, findS
   var activity = {
     activityId: req.activity._id,
     positionId: req.body.positionId,
+    memo: req.body.memo,
     hoursPerWeek: parseInt(req.body.hoursPerWeek),
     hoursPerYear: parseInt(req.body.hoursPerYear),
     leadership: parseInt(req.body.leadership),
@@ -609,6 +617,7 @@ router.get('/manage/:studentId/activities/edit/:activityIndex', authenticate, fi
               activityName: req.activity.name,
               activityYear: req.activity.year,
               activityId: req.activity._id,
+              memo: req.student.portfolio.activities[req.params.activityIndex].memo,
               hoursPerWeek: req.student.portfolio.activities[req.params.activityIndex].hoursPerWeek,
               hoursPerYear: req.student.portfolio.activities[req.params.activityIndex].hoursPerYear,
               leadership: req.student.portfolio.activities[req.params.activityIndex].leadership,
@@ -626,6 +635,7 @@ router.get('/manage/:studentId/activities/edit/:activityIndex', authenticate, fi
 });
 
 router.post('/manage/:studentId/activities/edit/:activityIndex', authenticate, findStudent, function(req, res, next) {
+  req.student.portfolio.activities[req.params.activityIndex].memo = req.body.memo;
   req.student.portfolio.activities[req.params.activityIndex].hoursPerWeek = parseInt(req.body.hoursPerWeek);
   req.student.portfolio.activities[req.params.activityIndex].hoursPerYear = parseInt(req.body.hoursPerYear);
   req.student.portfolio.activities[req.params.activityIndex].leadership = parseInt(req.body.leadership);
@@ -722,33 +732,25 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
         }
         db.collection("family_types").find({}).sort({type: 1}).toArray(function(err, result) {
           if(err) throw err;
-          if("familyTypeId" in req.student.portfolio.background) {
           for(familyType of result)
             if(req.student.portfolio.background.familyTypeId == familyType._id)
               familyTypesHtml = familyType.type;
-          } else familyTypesHtml = "";
           db.collection("parents_educations").find({}).sort({education: 1}).toArray(function(err, result) {
             if(err) throw err;
-            if("parentsEducationLevelId" in req.student.portfolio.background) {
-              if(req.student.portfolio.background.parentsEducationLevelId == "Other") parentsEducationLevelHtml = "Other";
-              else {
-                for(parentEducationLevel of result)
-                  if(req.student.portfolio.background.parentsEducationLevelId == parentEducationLevel._id)
-                    parentsEducationLevelHtml = parentEducationLevel.education
-              }
+            if(req.student.portfolio.background.parentsEducationLevelId == "Other") parentsEducationLevelHtml = "Other";
+            else {
+              for(parentEducationLevel of result)
+                if(req.student.portfolio.background.parentsEducationLevelId == parentEducationLevel._id)
+                  parentsEducationLevelHtml = parentEducationLevel.education
             }
-            if("parentsEducationSchoolId" in req.student.portfolio.background) {
-              if(req.student.portfolio.background.parentsEducationSchoolId == "Other") parentsEducationSchoolHtml = "Other";
-              else if(req.student.portfolio.background.parentsEducationSchoolId in colleges) parentsEducationSchoolHtml = colleges[req.student.portfolio.background.parentsEducationSchoolId].name;
-            }
-            if("parentsEducationMajorId" in req.student.portfolio.background) {
-              if(req.student.portfolio.background.parentsEducationMajorId == "Other") parentsEducationMajorHtml = "Other";
-              else if(req.student.portfolio.background.parentsEducationMajorId in majors) parentsEducationMajorHtml = majors[req.student.portfolio.background.parentsEducationMajorId].major;
-            }
+            if(req.student.portfolio.background.parentsEducationSchoolId == "Other") parentsEducationSchoolHtml = "Other";
+            else if(req.student.portfolio.background.parentsEducationSchoolId in colleges) parentsEducationSchoolHtml = colleges[req.student.portfolio.background.parentsEducationSchoolId].name;
+            if(req.student.portfolio.background.parentsEducationMajorId == "Other") parentsEducationMajorHtml = "Other";
+            else if(req.student.portfolio.background.parentsEducationMajorId in majors) parentsEducationMajorHtml = majors[req.student.portfolio.background.parentsEducationMajorId].major;
             if("siblingCount" in req.student.portfolio.background) {
               if(req.student.portfolio.background.siblingCount > 5) siblingCountHtml = "6+";
               else siblingCountHtml = req.student.portfolio.background.siblingCount;
-            } else siblingCountHtml = "";
+            }
             for(var activity of req.student.portfolio.activities)
               studentActivities.push(activity.activityId);
             db.collection("activities").aggregate([
@@ -816,7 +818,6 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
 
 router.post('/manage/:studentId/overview', authenticate, findStudent, function(req, res, next) {
   req.student.memo = req.body.memo;
-  console.log(req.body.memo);
   MongoClient.connect(url, function(err, db) {
     if(err) throw err;
     db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
@@ -844,16 +845,43 @@ router.get('/manage/:studentId/portfolio', authenticate, findStudent, function(r
 });
 
 router.get('/new', authenticate, function(req, res, next) {
-  res.layout('layout', {title:"IVY: New Student", head:'<script src="/javascripts/new_student.js"></script>'}, {body:{block:"new_student"}});
+  res.layout('layout',
+  {
+    title:"IVY: New Student",
+    head:'<script src="/javascripts/new_student.js"></script>'
+  },
+  {
+    body:{
+      block:"new_student",
+      data: {
+        title: "New Student",
+        name: "",
+        highschoolEntranceYear: "",
+        currentHighSchool: "",
+        studentsEmail: "",
+        studentsPhoneNumber: "",
+        studentsFacebook: "",
+        studentsInstagram: "",
+        parentsEmail: "",
+        parentsPhoneNumber: ""
+      }
+    }
+  });
 });
 
 router.post('/new', authenticate, function(req, res, next) {
-  if(req.body.name.length == 0 || req.body.highschoolEntranceYear < 2012 || req.body.grade > 2099) res.send("0");
+  if(req.body.name.length == 0 || req.body.highschoolEntranceYear < 2012 || req.body.highschoolEntranceYear > 2099) res.send("0");
   else {
     var student = {
       name: req.body.name,
       highschoolEntranceYear: parseInt(req.body.highschoolEntranceYear),
       highschool: new ObjectID(req.body.highschool),
+      studentsEmail: req.body.studentsEmail,
+      studentsPhoneNumber: req.body.studentsPhoneNumber,
+      studentsFacebook: req.body.studentsFacebook,
+      studentsInstagram: req.body.studentsInstagram,
+      parentsEmail: req.body.parentsEmail,
+      parentsPhoneNumber: req.body.parentsPhoneNumber,
       portfolio: {
         academic: {},
         candidate: new Array(3),
@@ -878,7 +906,70 @@ router.post('/new', authenticate, function(req, res, next) {
 });
 
 router.get('/edit/:studentId', authenticate, findStudent, function(req, res, next) {
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("highschools").findOne({ _id: req.student.highschool }, function(err, result) {
+      if(err) throw err;
+      res.layout('layout',
+      {
+        title:"IVY: Edit Student",
+        head:'<script src="/javascripts/edit_student.js"></script><link rel="stylesheet" href="/stylesheets/edit_student.css">'
+      },
+      {
+        body:{
+          block:"new_student",
+          data: {
+            title: "Edit Student",
+            name: req.student.name,
+            highschoolEntranceYear: req.student.highschoolEntranceYear,
+            currentHighSchool: "<div id='currentSchoolDiv'>Current School: " + result.name + "<span class='hidden'>" + req.student.highschool + "</span></div>",
+            studentsEmail: req.student.studentsEmail,
+            studentsPhoneNumber: req.student.studentsPhoneNumber,
+            studentsFacebook: req.student.studentsFacebook,
+            studentsInstagram: req.student.studentsInstagram,
+            parentsEmail: req.student.parentsEmail,
+            parentsPhoneNumber: req.student.parentsPhoneNumber
+          }
+        }
+      });
+    });
+  });
 });
+
+router.post('/edit/:studentId', authenticate, findStudent, function(req, res, next) {
+  req.student.name = req.body.name;
+  req.student.highschoolEntranceYear = req.body.highschoolEntranceYear;
+  req.student.highschool = new ObjectID(req.body.highschool);
+  req.student.studentsEmail = req.body.studentsEmail;
+  req.student.studentsPhoneNumber = req.body.studentsPhoneNumber;
+  req.student.studentsFacebook = req.body.studentsFacebook;
+  req.student.studentsInstagram = req.body.studentsInstagram;
+  req.student.parentsEmail = req.body.parentsEmail;
+  req.student.parentsPhoneNumber = req.body.parentsPhoneNumber;
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").replaceOne({ _id: req.student._id }, req.student, function(err, result) {
+      if(err) throw err;
+      db.close();
+      res.send("1");
+    });
+  });
+});
+
+router.post('/remove/:studentId', authenticate, findStudent, function(req, res, next) {
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("students").remove({ _id: new ObjectID(req.body.studentId) }, function(err, result) {
+      if(err) throw err;
+      db.collection("accounts").updateOne({ email: req.session.user.email }, { "$pull": { students: new ObjectID(req.body.studentId) } }, function(err, result) {
+        if(err) throw err;
+        db.close();
+        res.send("1");
+      });
+    });
+  });
+});
+
 
 router.get('/highschool', authenticate, function(req, res, next) {
   var keyword = req.query.keyword;

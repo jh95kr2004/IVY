@@ -23,25 +23,26 @@
     <div class="row justify-content-start">
       <div class='col'></div>
       <div class='col-12 col-md-10'>
-        <div id='newTitle' class='h1'>New Student - Basic Information</div>
+        <div id='newTitle' class='h1'><%- title %> - <span id='detailTitle'>Basic Information</span></div>
         <div id='newDescription' class='description'>Enter basic information about the student.</div>
         <div id="basicInfoDiv" class="form-group input-div">
           <div class="row">
             <div class="col-6">
               <label for="fullname">Full Name</label>
-              <input name="fullname" type="text" class="form-control" placeholder="John Doe" id="fullname" required>
+              <input name="fullname" type="text" class="form-control" placeholder="John Doe" id="fullname" value="<%- name %>" required>
             </div>
             <div class="col-6">
               <label for="highschoolEntranceYear">High School Entrance Year</label>
-              <input name="highschoolEntranceYear" type="number" class="form-control" min="2012" max="2099" placeholder="2012-2099" id="highschoolEntranceYear" required>
+              <input name="highschoolEntranceYear" type="number" class="form-control" min="2012" max="2099" placeholder="2012-2099" id="highschoolEntranceYear" value="<%- highschoolEntranceYear %>" required>
             </div>
           </div>
           <div class='button-group'>
-            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="nextButton">NEXT</button>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="nextToHighSchoolButton">NEXT</button>
             <button type="button" class="btn btn-transparent btn-lg rightAlign" id="cancelButton">CANCEL</button>
           </div>
         </div>
         <div id="highSchoolDiv" class="form-group d-none">
+          <%- currentHighSchool %>
           <input type="text" class="form-control search-input" placeholder="Search" id="highSchoolSearch">
           <div class='resultContainer'>
             <table class='table table-hover'>
@@ -49,8 +50,51 @@
             </table>
           </div>
           <div class='button-group'>
+            <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="nextToContactInfoButton">NEXT</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backToBasicInfoButton">BACK</button>
+          </div>
+        </div>
+        <div id="contactInfoDiv" class="form-group input-div d-none">
+          <div class="row">
+            <div class="col-12">Student's Contact Information</div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="studentsEmail">E-mail</label>
+              <input name="studentsEmail" type="email" class="form-control" placeholder="johndoe@ivy.com" id="studentsEmail" value="<%- studentsEmail %>" required>
+            </div>
+            <div class="col-6">
+              <label for="studentsPhoneNumber">Phone Number</label>
+              <input name="studentsPhoneNumber" type="tel" class="form-control" placeholder="010-0000-0000" id="studentsPhoneNumber" value="<%- studentsPhoneNumber %>" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="studentsFacebook">Facebook</label>
+              <input name="studentsFacebook" type="email" class="form-control" placeholder="johndoe@ivy.com" id="studentsFacebook" value="<%- studentsFacebook %>" required>
+            </div>
+            <div class="col-6">
+              <label for="studentsInstagram">Instagram</label>
+              <input name="studentsInstagram" type="text" class="form-control" placeholder="@johndoe" id="studentsInstagram" value="<%- studentsInstagram %>" required>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-12">Parent's Contact Information</div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="parentsEmail">E-mail</label>
+              <input name="parentsEmail" type="email" class="form-control" placeholder="parent@ivy.com" id="parentsEmail" value="<%- parentsEmail %>" required>
+            </div>
+            <div class="col-6">
+              <label for="parentsPhoneNumber">Phone Number</label>
+              <input name="parentsPhoneNumber" type="tel" class="form-control" placeholder="010-0000-0000" id="parentsPhoneNumber" value="<%- parentsPhoneNumber %>" required>
+            </div>
+          </div>
+          <div class='button-group'>
             <button type="button" class="btn btn-primary btn-lg rightAlign" disabled id="saveButton">SAVE</button>
-            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backButton">BACK</button>
+            <button type="button" class="btn btn-transparent btn-lg rightAlign" id="backToHighSchoolButton">BACK</button>
           </div>
         </div>
       </div>

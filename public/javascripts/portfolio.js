@@ -52,10 +52,10 @@ $(function() {
         credits[creditIndex].intelligence += parseInt(activity.intelligence);
         credits[creditIndex].selfMotivation += parseInt(activity.selfMotivation);
         $($("div#summaryDiv div.col-6")[creditIndex]).find("ul").append("<li>" + data.activities[activity.activityId].name + " (" + data.activities[activity.activityId].year + ")</li>");
-        credits[creditIndex].activities.push({activity: data.activities[activity.activityId], affect: true, index: i});
+        credits[creditIndex].activities.push({activity: data.activities[activity.activityId], memo: activity.memo, affect: true, index: i});
       } else {
         $($("div#summaryDiv div.col-6")[creditIndex]).find("ul").append("<li>" + data.activities[activity.activityId].name + " (" + data.activities[activity.activityId].year + ") *</li>");
-        credits[creditIndex].activities.push({activity: data.activities[activity.activityId], affect: false, index: i});
+        credits[creditIndex].activities.push({activity: data.activities[activity.activityId], memo:activity.memo, affect: false, index: i});
       }
     }
     for(var i = 1; i < 8; i++) {
@@ -96,8 +96,12 @@ $(function() {
           $("span#grade").text(Math.floor(d.index / 2) + 9 + "th grade");
           $("span#semester").text(d.index % 2 == 0 ? "(Spring - Summer)" : "(Fall - Winter)");
           $("ul#activityList").html("");
-          for(let activity of credits[d.index].activities)
-            $("<li></li>").html(activity.activity.name + " (" + activity.activity.year + ")" + ((activity.affect == false) ? " *" : "") + " <a href='/consult/manage/" + $("#studentId").text() + "/activities/edit/" + activity.index + "' class='editButton'>EDIT</a>").appendTo($("ul#activityList"));
+          for(let activity of credits[d.index].activities) {
+            var li = $("<li><div class='nameDiv'></div><div class='memoDiv'></div></li>");
+            $(li).find("div.nameDiv").html(activity.activity.name + " (" + activity.activity.year + ")" + ((activity.affect == false) ? " *" : "") + " <a href='/consult/manage/" + $("#studentId").text() + "/activities/edit/" + activity.index + "' class='editButton'>EDIT</a>");
+            if(activity.memo != null) $(li).find("div.memoDiv").html(activity.memo);
+            li.appendTo($("ul#activityList"));
+          }
         }
       },
       axis: {

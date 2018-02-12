@@ -50,3 +50,11 @@ button:not([disabled]) {
 .hidden {
   display: none;
 }
+
+.input-group-addon {
+	border-radius: 0;
+}
+
+textarea.form-control {
+	border-radius: 0;
+}

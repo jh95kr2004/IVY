@@ -22,50 +22,55 @@
   <div id='mainContainer' class='container'>
     <div class="row justify-content-start">
       <div class='col'></div>
-      <div class='col-12 col-md-10'>
-        <div id='newTitle' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></div>
-        <div id='newDescription' class='description'><%- description %></div>
-        <div id="basicInfoDiv" class="form-group input-div">
+      <div class='col-12 col-md-5'>
+        <div id='titleDiv' class='h1'><span id='studentName'><%- studentName %></span><span id='studentId' class='hidden'><%- studentId %></div>
+        <div id='descriptionDiv' class='description'></div>
+        <div id="manageMenuDiv" class="form-group input-div">
           <div class="row">
-            <div class="col-6 col-md-3">
+            <div class="col-6">
+              <a href="/consult/edit/<%- studentId %>/">Basic Info</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/academic">Academic Info</a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/candidate">Candidate Schools</a>
             </div>
           </div>
           <div class="row">
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/background">Background</a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/activities">Activities</a>
             </div>
           </div>
           <div class="row">
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/basic">Basic Ability</a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/interests">Interests</a>
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-md-6"><hr></div>
+            <div class="col-12"><hr></div>
           </div>
           <div class="row">
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/overview">Overview</a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6">
               <a href="/consult/manage/<%- studentId %>/portfolio">Portfolio</a>
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-md-6"><hr></div>
+            <div class="col-12"><hr></div>
           </div>
           <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12">
               <div class="input-group">
                 <div class="input-group-addon">
                   <span class="input-group-text">Memo</span>
@@ -76,6 +81,28 @@
                 <small id="memoHelp" class="text-muted">Memo will be saved automatically.</small>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div id='contactInfoDiv'  class='col-12 col-md-5'>
+        <div class='row'>
+          <div class='col-12'>
+            <p>Student's Contact Info.</p>
+            <table class='table' id='studentsContactInfo'>
+              <tbody>
+                <tr><th>E-mail</th><td><%- studentsEmail %></td></tr>
+                <tr><th>Phone</th><td><%- studentsPhoneNumber %></td></tr>
+                <tr><th>Facebook</th><td><%- studentsFacebook %></td></tr>
+                <tr><th>Instagram</th><td><%- studentsInstagram %></td></tr>
+              </tbody>
+            </table>
+            <p>Parent's Contact Info.</p>
+            <table class='table' id='parentsContactInfo'>
+              <tbody>
+                <tr><th>E-mail</th><td><%- parentsEmail %></td></tr>
+                <tr><th>Phone</th><td><%- parentsPhoneNumber %></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -131,3 +131,8 @@ div#summaryDiv div.col-6 {
 div#summaryDiv div.row span {
   font-size: 1.5rem;
 }
+
+div.memoDiv {
+  padding-top: .5rem;
+  text-align: justify;
+}

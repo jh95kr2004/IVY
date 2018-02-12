@@ -19,7 +19,7 @@ You have to run MongoDB service on your server after installation.
 Just clone the git.
 
     git clone https://github.com/jh95kr2004/IVY.git
-    
+
 Now you have to configure database for this service. Just type the command below on the root directory of this project. If the database of which name is *IVY* is already exists in your MongoDB, you have to drop that database before type commands.
 
     mongorestore database
@@ -29,13 +29,13 @@ Now you have to configure database for this service. Just type the command below
 Just type command below on the root directory of this project.
 
     node app.js
-You should not close the terminal that runs Node.js. Unless the service will be terminated. If you want to run the service as the background service, see this link: [How do I run a node.js app as a background service?](https://stackoverflow.com/questions/4018154/how-do-i-run-a-node-js-app-as-a-background-service)<br>
+You SHOULD NOT close the terminal that runs Node.js. Unless the service will be terminated. If you want to run the service as the background service, see this link: [How do I run a node.js app as a background service?](https://stackoverflow.com/questions/4018154/how-do-i-run-a-node-js-app-as-a-background-service)<br>
 
 ### Use service
 Now you can use IVY service using web browser. Just type the address of your web server on the browser. Default port of this service is 3000.
 
     http://<address of your webserver>:3000
-    
+
 ### Login administrator account
 Default account of administrator:
 - ID: admin@ivy.com

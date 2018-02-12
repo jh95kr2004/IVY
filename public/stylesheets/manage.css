@@ -1,3 +1,24 @@
 textarea#memo {
   width: 100%;
+  border-radius: 0;
+}
+
+div#contactInfoDiv {
+  border-left: 1px solid rgba(0,0,0,.1);
+}
+
+div#contactInfoDiv p {
+  font-weight: bold;
+}
+
+div#contactInfoDiv table th {
+  width: 7rem;
+  font-weight: normal;
+}
+
+table#studentsContactInfo {
+  margin-bottom: 2rem;
+}
+
+button#editButton {
 }

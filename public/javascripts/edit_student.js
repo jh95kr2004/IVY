@@ -1,7 +1,15 @@
 $(function() {
+  if(!($("#fullname").is(":valid")) || !($("#highschoolEntranceYear").is(":valid"))) {
+    $("#nextToHighSchoolButton").attr("disabled", "true");
+    $("#saveButton").attr("disabled", "true");
+  } else {
+    $("#nextToHighSchoolButton").removeAttr("disabled");
+    $("#saveButton").removeAttr("disabled");
+  }
+  $("#nextToContactInfoButton").removeAttr("disabled");
+
   $("#highSchoolSearch").val("");
   $("#highSchoolSearch").on("input", function() {
-    $("#nextToContactInfoButton").attr("disabled", "true");
     if($(this).val() == "") {
       $("#highSchoolDiv table tbody").html("");
       return;
@@ -16,13 +24,9 @@ $(function() {
         $(tr).click(function() {
           if($(this).hasClass("selected")) {
             $(this).removeClass("selected");
-            $("#nextToContactInfoButton").attr("disabled", "true");
-            $("#saveButton").attr("disabled", "true");
           } else {
             $(this).siblings().removeClass("selected");
             $(this).addClass("selected");
-            $("#nextToContactInfoButton").removeAttr("disabled");
-            $("#saveButton").removeAttr("disabled");
           }
         });
         $(tr).appendTo(tbody);
@@ -73,10 +77,6 @@ $(function() {
   });
 
   $("#nextToContactInfoButton").click(function() {
-    if($("tr.selected").length == 0) {
-      $(this).attr("disabled", "true");
-      return;
-    }
     $("#highSchoolDiv").addClass("d-none");
     $("#contactInfoDiv").removeClass("d-none");
     $("#detailTitle").text("Contact Information");
@@ -91,15 +91,15 @@ $(function() {
   });
 
   $("#saveButton").click(function() {
-    if(!($("#fullname").is(":valid")) || !($("#highschoolEntranceYear").is(":valid")) || $("tr.selected").length == 0) {
+    if(!($("#fullname").is(":valid")) || !($("#highschoolEntranceYear").is(":valid"))) {
       $(this).attr("disabled", "true");
       return;
     }
 
-    $.post("/consult/new", {
+    $.post(window.location.href, {
       name: $("#fullname").val(),
       highschoolEntranceYear: parseInt($("#highschoolEntranceYear").val()),
-      highschool: $("tr.selected td.code").text(),
+      highschool: (($("tr.selected").length == 0) ? $("div#currentSchoolDiv span").text() : $("tr.selected td.code").text()),
       studentsEmail: $("#studentsEmail").val(),
       studentsPhoneNumber: $("#studentsPhoneNumber").val(),
       studentsFacebook: $("#studentsFacebook").val(),
@@ -108,7 +108,7 @@ $(function() {
       parentsPhoneNumber: $("#parentsPhoneNumber").val()
     }).done(function(data) {
       if(data == 1) {
-        alert("Added new student successfully!");
+        alert("Student Information is updated successfully!");
         window.location = "/consult";
       } else alert("You entered wrong data. Please check and re-try.");
     });
