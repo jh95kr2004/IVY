@@ -47,7 +47,7 @@ router.get('/', authenticate, function(req, res, next) {
           else grade += "th grade";
           studentsListHtml += "<tr><td>" + student.name + "</td><td>" + grade + "</td><td>" + student.highschool_name[0].name + "</td><td class='code'>" + student._id + "</td></tr>";
         }
-        res.layout('layout', {title:"IVY: Consult", head:"<script src='/javascripts/consult.js'></script>"}, {body:{block:"consult", data:{students: studentsListHtml}}});
+        res.layout('layout', {title:"IVY: Consult", head:"<script src='/javascripts/consultant/dashboard.js'></script>"}, {body:{block:"consultant/dashboard", data:{students: studentsListHtml}}});
       });
     });
   });
@@ -84,11 +84,11 @@ router.get('/manage/:studentId/', authenticate, findStudent, function(req, res, 
   res.layout('layout',
   {
     title: "IVY: Manage",
-    head: "<script src='/javascripts/manage.js'></script><link rel='stylesheet' href='/stylesheets/manage.css'>"
+    head: "<script src='/javascripts/consultant/manage.js'></script><link rel='stylesheet' href='/stylesheets/manage.css'>"
   },
   {
     body: {
-      block: "manage",
+      block: "consultant/manage",
       data: {
         studentName: req.student.name,
         studentId : req.student._id,
@@ -124,11 +124,11 @@ router.get('/manage/:studentId/academic', authenticate, findStudent, function(re
   res.layout('layout',
   {
     title: "IVY: Academic Info",
-    head: "<script src='/javascripts/manage_academic.js'></script>"
+    head: "<script src='/javascripts/consultant/manage_academic.js'></script>"
   },
   {
     body: {
-      block: "manage_academic",
+      block: "consultant/manage_academic",
       data: {
         studentName: req.student.name,
         studentId: req.student._id,
@@ -157,11 +157,11 @@ router.get('/manage/:studentId/basic', authenticate, findStudent, function(req, 
   res.layout('layout',
   {
     title: "IVY: Basic Ability",
-    head: "<script src='/javascripts/manage_basicability.js'></script>"
+    head: "<script src='/javascripts/consultant/manage_basicability.js'></script>"
   },
   {
     body: {
-      block: "manage_basicability",
+      block: "consultant/manage_basicability",
       data: {
         studentName: req.student.name,
         studentId: req.student._id,
@@ -212,7 +212,7 @@ router.get('/manage/:studentId/candidate', authenticate, findStudent, function(r
         },
         {
           body: {
-            block:"manage_candidateschools",
+            block:"consultant/manage_candidateschools",
             data: {
               studentName: req.student.name,
               studentId: req.student._id,
@@ -243,11 +243,11 @@ router.get('/manage/:studentId/candidate/:candidate', authenticate, findStudent,
         res.layout('layout',
         {
           title: "IVY: Candidate Schools",
-          head: '<script src="/javascripts/select_candidateschool.js"></script>'
+          head: '<script src="/javascripts/consultant/select_candidateschool.js"></script>'
         },
         {
           body: {
-            block:"select_candidateschool",
+            block:"consultant/select_candidateschool",
             data: {
               studentName: req.student.name,
               studentId: req.student._id,
@@ -312,11 +312,11 @@ router.get('/manage/:studentId/background', authenticate, findStudent, function(
             res.layout('layout',
             {
               title: "IVY: Background",
-              head: "<script src='/javascripts/manage_background.js'></script>"
+              head: "<script src='/javascripts/consultant/manage_background.js'></script>"
             },
             {
               body: {
-                block: "manage_background",
+                block: "consultant/manage_background",
                 data: {
                   studentName: req.student.name,
                   studentId: req.student._id,
@@ -381,11 +381,11 @@ router.get('/manage/:studentId/activities', authenticate, findStudent, function(
         res.layout('layout',
         {
           title: "IVY: Activities",
-          head: "<script src='/javascripts/manage_activities.js'></script>"
+          head: "<script src='/javascripts/consultant/manage_activities.js'></script>"
         },
         {
           body: {
-            block: "manage_activities",
+            block: "consultant/manage_activities",
             data: {
               studentName: req.student.name,
               studentId: req.student._id,
@@ -428,11 +428,11 @@ router.get('/manage/:studentId/activities/find', authenticate, findStudent, func
   res.layout('layout',
   {
     title: "IVY: Find Activity",
-    head: '<script src="/javascripts/find_activity.js"></script>'
+    head: '<script src="/javascripts/consultant/find_activity.js"></script>'
   },
   {
     body: {
-      block:"find_activity",
+      block:"consultant/find_activity",
       data: {
         studentName: req.student.name,
         studentId: req.student._id
@@ -460,11 +460,11 @@ router.get('/manage/:studentId/activities/new', authenticate, findStudent, funct
       res.layout('layout',
       {
         title: "IVY: New Activity",
-        head: '<script src="/javascripts/new_activity.js"></script>'
+        head: '<script src="/javascripts/consultant/new_activity.js"></script>'
       },
       {
         body: {
-          block: "new_activity",
+          block: "consultant/new_activity",
           data: {
             activityTypes: activityTypesHtml,
             activityDescriptions: activityDescriptionsHtml
@@ -530,11 +530,11 @@ router.get('/manage/:studentId/activities/add/:activityId', authenticate, findSt
       res.layout('layout',
       {
         title: "IVY: Add Activity",
-        head: '<script src="/javascripts/add_activity.js"></script>'
+        head: '<script src="/javascripts/consultant/add_activity.js"></script>'
       },
       {
         body: {
-          block: "add_activity",
+          block: "consultant/add_activity",
           data: {
             title: "Add Activity",
             studentName: req.student.name,
@@ -605,11 +605,11 @@ router.get('/manage/:studentId/activities/edit/:activityIndex', authenticate, fi
         res.layout('layout',
         {
           title: "IVY: Edit Activity",
-          head: '<script src="/javascripts/edit_activity.js"></script>'
+          head: '<script src="/javascripts/consultant/edit_activity.js"></script>'
         },
         {
           body: {
-            block: "add_activity",
+            block: "consultant/add_activity",
             data: {
               title: "Edit Activity",
               studentName: req.student.name,
@@ -675,11 +675,11 @@ router.get('/manage/:studentId/interests', authenticate, findStudent, function(r
   res.layout('layout',
   {
     title: "IVY: Interests",
-    head: "<script src='/javascripts/manage_interests.js'></script><link rel='stylesheet' href='/stylesheets/manage_interests.css'>"
+    head: "<script src='/javascripts/consultant/manage_interests.js'></script><link rel='stylesheet' href='/stylesheets/manage_interests.css'>"
   },
   {
     body: {
-      block: "manage_interests",
+      block: "consultant/manage_interests",
       data: {
         studentName: req.student.name,
         studentId: req.student._id,
@@ -774,11 +774,11 @@ router.get('/manage/:studentId/overview', authenticate, findStudent, function(re
                 res.layout('layout',
                 {
                   title:"IVY: Overview",
-                  head:'<script src="/javascripts/overview.js"></script><link rel="stylesheet" href="/stylesheets/overview.css">'
+                  head:'<script src="/javascripts/consultant/overview.js"></script><link rel="stylesheet" href="/stylesheets/overview.css">'
                 },
                 {
                   body: {
-                    block:"overview",
+                    block:"consultant/overview",
                     data: {
                       studentName: req.student.name,
                       studentId: req.student._id,
@@ -831,11 +831,11 @@ router.get('/manage/:studentId/portfolio', authenticate, findStudent, function(r
   res.layout('layout',
   {
     title:"IVY: Portfolio",
-    head:'<script src="https://d3js.org/d3.v4.min.js"></script><script src="/javascripts/billboard.min.js"></script><link rel="stylesheet" href="/stylesheets/billboard.min.css"><script src="/javascripts/portfolio.js"></script><link rel="stylesheet" href="/stylesheets/portfolio.css">'
+    head:'<script src="https://d3js.org/d3.v4.min.js"></script><script src="/javascripts/billboard.min.js"></script><link rel="stylesheet" href="/stylesheets/billboard.min.css"><script src="/javascripts/consultant/portfolio.js"></script><link rel="stylesheet" href="/stylesheets/portfolio.css">'
   },
   {
     body: {
-      block:"portfolio",
+      block:"consultant/portfolio",
       data: {
         studentName: req.student.name,
         studentId: req.student._id
@@ -848,11 +848,11 @@ router.get('/new', authenticate, function(req, res, next) {
   res.layout('layout',
   {
     title:"IVY: New Student",
-    head:'<script src="/javascripts/new_student.js"></script>'
+    head:'<script src="/javascripts/consultant/new_student.js"></script>'
   },
   {
     body:{
-      block:"new_student",
+      block:"consultant/new_student",
       data: {
         title: "New Student",
         name: "",
@@ -913,11 +913,11 @@ router.get('/edit/:studentId', authenticate, findStudent, function(req, res, nex
       res.layout('layout',
       {
         title:"IVY: Edit Student",
-        head:'<script src="/javascripts/edit_student.js"></script><link rel="stylesheet" href="/stylesheets/edit_student.css">'
+        head:'<script src="/javascripts/consultant/edit_student.js"></script><link rel="stylesheet" href="/stylesheets/edit_student.css">'
       },
       {
         body:{
-          block:"new_student",
+          block:"consultant/new_student",
           data: {
             title: "Edit Student",
             name: req.student.name,
@@ -969,7 +969,6 @@ router.post('/remove/:studentId', authenticate, findStudent, function(req, res, 
     });
   });
 });
-
 
 router.get('/highschool', authenticate, function(req, res, next) {
   var keyword = req.query.keyword;

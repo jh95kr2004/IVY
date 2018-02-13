@@ -7,11 +7,11 @@
     </button>
     <div id="navbarSupportedContent">
       <ul class="nav justify-content-end">
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="/admin">CONSULTANTS</a>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/admin/highschool">HIGH SCHOOLS</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/highschools">HIGH SCHOOLS</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/account">ACCOUNT</a>
@@ -27,34 +27,33 @@
       <div class='col'></div>
       <div class='col-12 col-md-10'>
         <div>
-          <span class='h1'>High School List</span>
+          <span class='h1'>Consultant List</span>
           <input type="text" class="form-control search-input" id="searchBar" placeholder="Search">
         </div>
         <div class='resultContainer'>
           <table class='table table-hover'>
-            <tbody><%- highschools %></tbody>
+            <tbody><%- consultants %></tbody>
           </table>
         </div>
         <div class='button-group'>
-          <a href="/admin/highschool/new" class="btn btn-primary btn-lg">NEW HIGH SCHOOL</a>
-          <button type="button" class="btn btn-transparent btn-lg" data-toggle="tooltip" data-placement="top" title="Not implemented.">EDIT</button>
+          <a href="/admin/new" class="btn btn-primary btn-lg">NEW CONSULTANT</a>
           <button type="button" class="btn btn-transparent btn-lg" data-toggle="modal" data-target="#removeModal">REMOVE</button>
         </div>
         <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Remove High School?</h5>
+                <h5 class="modal-title">Remove Consultant?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <p>Are you sure you want to delete all data on this high school? This action cannot be undone.</p>
+                <p>Are you sure you want to delete all data on this consultant? This action cannot be undone.</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                <button type="button" class="btn btn btn-danger" data-toggle="tooltip" data-placement="top" title="Not implemented.">REMOVE HIGH SCHOOL</button>
+                <button type="button" class="btn btn btn-danger" id="removeConsultantButton">REMOVE CONSULTANT</button>
               </div>
             </div>
           </div>

@@ -14,11 +14,7 @@ $(function() {
   $("#removeActivityButton").click(function() {
     $.get("/consult/manage/" + $("#studentId").text() + "/activities/remove/" + $("tr.selected td.code").text(), {})
     .done(function(data) {
-      if(data == "1") {
-        alert("Activity is removed successfully!");
-        location.reload();
-      } else
-        alert("There is something wrong...");
+      location.reload();
     });
   });
 

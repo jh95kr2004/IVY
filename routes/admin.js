@@ -24,15 +24,15 @@ router.get('/', authenticate, function(req, res, next) {
     if(err) throw err;
     db.collection("accounts").find({permission:"consultant"}).sort({name: -1}).toArray(function(err, result) {
       for(let consultant of result)
-        consultantsListHtml += "<tr><td>" + consultant.name + "</td><td>" + consultant.email + "</td></tr>";
+        consultantsListHtml += "<tr><td>" + consultant.name + "</td><td>" + consultant.email + "</td><td class='code'>" + consultant._id + "</td></tr>";
       db.close();
-      res.layout('layout', {title:"IVY: Administrator", head:""}, {body:{block:"admin", data:{consultants: consultantsListHtml}}});
+      res.layout('layout', {title:"IVY: Administrator", head:'<script src="/javascripts/admin/consultants.js"></script>'}, {body:{block:"admin/consultants", data:{consultants: consultantsListHtml}}});
     });
   });
 });
 
 router.get('/new', authenticate, function(req, res, next) {
-  res.layout('layout', {title:"IVY: New Consultant", head:'<script src="/javascripts/new_consultant.js"></script>'}, {body:{block:"new_consultant"}});
+  res.layout('layout', {title:"IVY: New Consultant", head:'<script src="/javascripts/admin/new_consultant.js"></script>'}, {body:{block:"admin/new_consultant"}});
 });
 
 router.post('/new', authenticate, function(req, res, next) {
@@ -50,7 +50,18 @@ router.post('/new', authenticate, function(req, res, next) {
   }
 });
 
-router.get('/highschool', authenticate, function(req, res, next) {
+router.post('/remove', authenticate, function(req, res, next) {
+  MongoClient.connect(url, function(err, db) {
+    if(err) throw err;
+    db.collection("accounts").remove({ _id: new ObjectID(req.body.consultantId) }, function(err, result) {
+      if(err) throw err;
+      db.close();
+      res.send("1");
+    });
+  });
+});
+
+router.get('/highschools', authenticate, function(req, res, next) {
   var highschoolsListHtml = "";
   MongoClient.connect(url, function(err, db) {
     if(err) throw err;
@@ -58,16 +69,16 @@ router.get('/highschool', authenticate, function(req, res, next) {
       for(let highschool of result)
         highschoolsListHtml += "<tr><td>" + highschool.name + "</td><td>" + highschool.location + "</td><td class='code'>" + highschool._id +"</td></tr>";
       db.close();
-      res.layout('layout', {title:"IVY: Administrator", head:""}, {body:{block:"highschool", data:{highschools: highschoolsListHtml}}});
+      res.layout('layout', {title:"IVY: Administrator", head:""}, {body:{block:"admin/highschools", data:{highschools: highschoolsListHtml}}});
     });
   });
 });
 
-router.get('/highschool/new', authenticate, function(req, res, next) {
-  res.layout('layout', {title:"IVY: New High School", head:'<script src="/javascripts/new_highschool.js"></script>'}, {body:{block:"new_highschool"}});
+router.get('/highschools/new', authenticate, function(req, res, next) {
+  res.layout('layout', {title:"IVY: New High School", head:'<script src="/javascripts/admin/new_highschool.js"></script>'}, {body:{block:"admin/new_highschool"}});
 });
 
-router.post('/highschool/new', authenticate, function(req, res, next) {
+router.post('/highschools/new', authenticate, function(req, res, next) {
   if(req.body.name.length == 0 || req.body.location.length == 0) res.send("0");
   else {
     var highschool = { name: req.body.name, location: req.body.location };

@@ -61,7 +61,21 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.layout('layout',
+  {
+    title: "IVY: Error",
+    head: ""
+  },
+  {
+    body: {
+      block: "caution",
+      data: {
+        title: err.status + " Error",
+        description: ((err.status == 404) ? "Sorry, the page you tried cannot be found." : "")
+      }
+    }
+  });
+  // res.render('error');
 });
 
 module.exports = app;
