@@ -20,10 +20,12 @@ $(function() {
       name: $("#fullname").val(),
       email: $("#email").val()
     }).done(function(data) {
-      if(data == 1) {
+      if(data.status == 1) {
         alert("Added new consultant successfully!");
         window.location = "/admin";
-      } else alert("You entered wrong data. Please check and re-try.");
+      } else if(data.status == -1) {
+        alert("This email is already used.");
+      } else if(data.status == 0) alert("You entered wrong data. Please check and re-try.");
     });
   });
 });

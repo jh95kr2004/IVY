@@ -36,17 +36,26 @@ router.get('/new', authenticate, function(req, res, next) {
 });
 
 router.post('/new', authenticate, function(req, res, next) {
-  if(req.body.name.length == 0 || req.body.email.length == 0 || validator.isEmail(req.body.email) == false) res.send("0");
+  if(req.body.name.length == 0 || req.body.email.length == 0 || validator.isEmail(req.body.email) == false)
+    res.json({ status: 0, url: "You entered wrong data. Please check and re-try." });
   else {
     var account = { name: req.body.name, email: req.body.email, password: "123", permission: "consultant", students: [] };
     MongoClient.connect(url, function(err, db) {
       if(err) throw err;
-      db.collection("accounts").insertOne(account, function(err, res) {
+      db.collection("accounts").findOne({ email: req.body.email }, function(err, result) {
         if(err) throw err;
-        db.close();
-      })
-    })
-    res.send("1");
+        if(result != null) {
+          db.close();
+          res.json({ status: -1, message: "This email is already used. Try another email address." });
+        } else {
+          db.collection("accounts").insertOne(account, function(err, result) {
+            if(err) throw err;
+            db.close();
+            res.json({ status: 1, url: "Added new consultant successfully!" });
+          });
+        }
+      });
+    });
   }
 });
 
