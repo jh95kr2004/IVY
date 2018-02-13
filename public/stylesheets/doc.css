@@ -40,7 +40,11 @@ button:not([disabled]) {
 
 .btn-transparent {
 	background-color: transparent;
-	color: #CECECE;
+	color: #9C9C9C;
+}
+
+.btn-transparent:disabled {
+	opacity: .5;
 }
 
 .btn-transparent:not([disabled]):hover {

@@ -133,6 +133,19 @@ div#summaryDiv div.row span {
 }
 
 div.memoDiv {
-  padding-top: .5rem;
+  padding-top: .25rem;
+  font-size: .75rem;
   text-align: justify;
+}
+
+div#manageActivitiesButtonDiv {
+  text-align: right;
+}
+
+small#activityMemoHelp {
+  display: block;
+}
+
+div#activityMemoHelpDiv {
+  text-align: right;
 }
