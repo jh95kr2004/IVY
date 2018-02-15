@@ -90,16 +90,34 @@ a#learnMoreButton:visited {
 }
 
 @media screen and (max-width: 767px) {
-	nav a.nav-link {
-		padding: 1rem;
+	#mainContainer div.center-elem h1 {
+		margin-bottom: 2.5rem;
+		font-size: 3.5rem;
+		line-height: 1.1;
 	}
 
-	nav#largeSizeMenu a.nav-link {
+	#mainContainer div.center-elem h4 {
+		margin-bottom: 1rem;
+	}
+
+	#main-buttons {
+		margin-top: 2rem;
+	}
+
+	nav a.nav-link {
+		padding: 0;
+		margin: 1rem;
+	}
+
+	nav#largeSizeMenu {
 		display: none;
 	}
 
 	#smallSizeMenu {
-		position: relative;
-		display: inherit;
+		display: block;
+	}
+
+	#smallSizeMenu div.p-4 {
+		background-color: #333;
 	}
 }

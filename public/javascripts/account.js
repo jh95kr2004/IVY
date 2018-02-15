@@ -7,6 +7,10 @@ $(function(){
     }
   });
 
+  $("#cancelButton").click(function() {
+    window.history.back();
+  });
+
   $("#saveButton").click(function() {
     if($("#currentPassword").val() == "" || $("#newPassword").val() == "" || $("#newPasswordConfirm").val() == "") {
       $(this).attr("disabled", "true");

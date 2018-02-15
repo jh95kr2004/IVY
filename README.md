@@ -50,9 +50,8 @@ You can add consultant account via administrator page. Make first consultant acc
 This service doesn't have any encryption or security function. So be careful to use your usual password.
 
 ## To Do List
-- 'EDIT' and 'REMOVE' function for students.
 - Make 'CONTACT' page.
-- Make 'LEARN' MORE page.
+- Make 'LEARN MORE' page.
 - Add radar chart in the portfolio page.
 - Add Secure HTTP (HTTPS)
 - Add Activity recommendation function.
