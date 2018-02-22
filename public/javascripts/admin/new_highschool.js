@@ -16,13 +16,13 @@ $(function() {
       $(this).attr("disabled", "true");
       return;
     }
-    $.post("/admin/highschool/new", {
+    $.post("/admin/highschools/new", {
       name: $("#schoolName").val(),
       location: $("#schoolLocation").val()
     }).done(function(data) {
       if(data == 1) {
         alert("Added new high school successfully!");
-        window.location = "/admin/highschool";
+        window.location = "/admin/highschools";
       } else alert("You entered wrong data. Please check and re-try");
     });
   });
